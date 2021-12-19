@@ -1,0 +1,34 @@
+<nav id="adminSidebar" class="admin-sidebar">
+    <div class="admin-sidebar-header">
+        <h3 class="admin-sidebar-header__title">Admin</h3>
+        <a href="" class="admin-sidebar-header-infor d-flex flex-column justify-content-center text-decoration-none text-white">
+            {{#if user}}
+                <div class="admin-sidebar-header-avatar rounded-circle">
+                    <img src="#" alt="admin-avatar" class="admin-sidebar-header-avatar__img">
+                </div>
+                <span class="admin-sidebar-header-infor__name mt-2">Sang</span>
+            {{/if}}
+        </a>
+    </div>
+
+
+    <ul class="list-unstyled components pt-4 pb-0 admin-sidebar-list">
+        <li class="admin-sidebar-item admin-sidebar-item--active">
+            <a href="/" class="admin-sidebar-item__link">Home</a>
+        </li>
+        <li class="admin-sidebar-item admin-sidebar-item--active">
+            <a href="/tournament" class="admin-sidebar-item__link">Tournaments</a>
+        </li>
+        <li class="admin-sidebar-item admin-sidebar-item--active">
+            <a href="/" class="admin-sidebar-item__link">Team</a>
+        </li>
+        <li class="admin-sidebar-item admin-sidebar-item--active">
+            <a href="/" class="admin-sidebar-item__link">Videos</a>
+        </li>
+        <li class="admin-sidebar-item">
+            <a href="/auth/logout" class="admin-sidebar-item__link d-flex align-items-center">
+                Đăng xuất
+            </a>
+        </li>
+    </ul>
+</nav>
