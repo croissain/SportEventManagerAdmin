@@ -9,14 +9,13 @@ const dotenv = require('dotenv');
 const indexRouter = require('./routes/index');
 const tournamentRouter = require('./routes/tournament');
 const teamRouter = require('./routes/team');
+const pagiHelper = require('express-handlebars-paginate');
 
 
 const expressHandlebarsSections = require('express-handlebars-sections');
 
 const passport = require('passport');
 const session = require('express-session');
-
-
 
 const app = express();
 
@@ -26,7 +25,12 @@ app.engine('.hbs', exphbs.engine({
   defaultLayout: 'layout',
 
   helpers: {
-    section: expressHandlebarsSections()
+    section: expressHandlebarsSections(),
+    createPagination: pagiHelper.createPagination,
+    sum: function (a, b) {
+      return a + b;
+    }
+
   }
 }));
 

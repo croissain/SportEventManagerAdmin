@@ -7,3 +7,9 @@ exports.findAllTeams = async() => {
         raw: true
     });
 }
+
+exports.findAllTeamsAndCount = async() => {
+    return await models.DoiBong.findAndCountAll({
+        raw: true
+    });
+}

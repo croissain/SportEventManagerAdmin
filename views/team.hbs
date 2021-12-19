@@ -1,36 +1,62 @@
 
 <div class="container">
     <div class="admin-container-content">
-        <div class="table-wrapper">
-            <div class="table-title">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h4>Danh sách các đội thi đấu</h4>
-                    </div>
-                    <div class="col-sm-6">
-                        <a href="#" class="btn btn-danger btn-delete" data-toggle="modal"><i
-                                class="fas fa-minus-circle"></i><span>Xóa tất cả</span></a>
+        <header class="px-4">
+            <h1 class="row py-2 pl-2 text-primary">
+                Danh sách đội
+            </h1>
+        </header>
+        <div class="table-wrapper px-4">
+            <form class="row gx-3 gy-2 mb-4 align-items-center">
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="" placeholder="Mã độ bóng">
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="" placeholder="Mã người đăng ký">
+                        </div>
+                        <div class="col-sm-3">
+                            <select class="form-select" id="">
+                                <option selected>Tên đội bóng</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <select class="form-select" id="">
+                                <option selected>Tên giải đấu</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <table class="table table-striped table-hover">
-                <thead>
-                <tr>
-                    <th>
-                        <span class="custom-checkbox">
-                            <input type="checkbox" id="selectAll">
-                            <label for="selectAll"></label>
-                        </span>
-                    </th>
-                    <th>Mã đội bóng</th>
-                    <th>Tên đội bóng</th>
-                    <th>Số thành viên</th>
-                    <th>Màu áo</th>
-                    <th>Điểm</th>
-                    <th>Mã bảng đấu</th>
-                    <th>Sửa/Xóa</th>
 
-                </tr>
+            </form>
+
+            <table id="table" class="table table-striped table-bordered table-hover">
+                <thead>
+                      <tr>
+                        <th>
+                            <span class="custom-checkbox">
+                                <input type="checkbox" id="selectAll">
+                                <label for="selectAll"></label>
+                            </span>
+                        </th>
+                        <th>Mã đội bóng</th>
+                        <th>Tên đội bóng</th>
+                        <th>Số thành viên</th>
+                        <th>Màu áo</th>
+                        <th>Điểm</th>
+                        <th>Mã người đăng ký</th>
+                        <th>Mã giải đấu</th>
+                        <th>Mã bảng đấu</th>
+                        <th>Chi tiết</th>
+                        <th>Sửa/Xóa</th>
+                    </tr>
                 </thead>
                 <tbody>
                 {{#each teams}}
@@ -50,11 +76,8 @@
                         <td>{{MaNDK}}</td>
                         <td>{{MaGD}}</td>
                         <td>{{MaBD}}</td>
-
-
                         <td class="text-center">
                             <a href="">
-                                Chi tiết
                                 <i class="fas fa-info-circle"></i>
                             </a>
                         </td>
@@ -69,6 +92,19 @@
                 </tbody>
             </table>
         </div>
+
+        <footer class="row justify-content-center">
+            <nav class="col-lg-3 col-md-6 col-sm-9" aria-label="Page navigation example" id="pagination">
+<!--                <ul class="pagination">-->
+<!--                    <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--                    <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--                    <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--                    <li class="page-item"><a class="page-link" href="#">Next</a></li>-->
+<!--                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>-->
+<!--                </ul>-->
+                {{{createPagination pagination paginationClass="pagination"}}}
+            </nav>
+        </footer>
     </div>
 </div>
 
@@ -122,6 +158,29 @@
             const id = $(this).children('input').val();
             console.log(id);
             $("#deleteID").val(id);
+        });
+
+        let urlParams = new URLSearchParams(location.search);
+
+        $(document).ready(function() {
+
+            $('#pagination li').addClass('page-item');
+            $('#pagination li a').addClass('page-link');
+
+
+            const currentPage = urlParams.get("page");
+
+            $('#pagination li a').each((index, item) => {
+                let itemPage = $(item).attr('href').split('=')[1];
+                // console.log(itemPage);
+                urlParams.set("page",itemPage);
+
+                const itemHref = pathname + '?' + urlParams.toString();
+                $(item).attr('href',itemHref);
+            })
+
+            urlParams.set("page",currentPage);
+
         });
 
     </script>
