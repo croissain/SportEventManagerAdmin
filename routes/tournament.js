@@ -5,6 +5,7 @@ const TournamentController = require('../controllers/TournamentController');
 
 router.get('/', TournamentController.showTournament);
 router.get('/add', TournamentController.addTournament);
+router.get('/edit', TournamentController.editTournament);
 
 
 module.exports = router;

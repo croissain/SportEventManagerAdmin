@@ -50,9 +50,14 @@
                         Chi tiết
                     </td>
                     <td>
-                        <a href="#editModal" class="edit" data-toggle="modal"><i
-                                class="fas fa-pencil-alt"></i></a>
-                        <a href="#" class="delete" data-toggle="modal"><i class="fas fa-trash"></i></a>
+                        <a href="#editModal" class="edit" data-toggle="modal">
+                            <input type="hidden" value="{{MaGD}}">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        <a href="#deleteModal" class="delete" data-toggle="modal">
+                            <input type="hidden" value="{{MaGD}}">
+                            <i class="fas fa-trash"></i>
+                        </a>
                     </td>
                 </tr>
                 {{/each}}
@@ -61,7 +66,7 @@
     </div>
     </div>
 </div>
-<!-- Edit Modal HTML -->
+<!-- Add Modal HTML -->
 <div id="addModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -104,17 +109,18 @@
         </div>
     </div>
 </div>
+
 <!-- Edit Modal HTML -->
 <div id="editModal" class="modal fade">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" id="editContentModal">
             <form action="/tournament/edit" method="get">
+                <input type="hidden" name="tournamentEditID" id="tournamentEditID">
                 <div class="modal-header">
                     <h4 class="modal-title">Sửa giải đấu</h4>
                     <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"></button>
                 </div>
                 <div class="modal-body">
-
                     <div class="form-group">
                         <label>Tên giải đấu</label>
                         <input name="tournamentName" type="text" class="form-control" required>
@@ -142,34 +148,37 @@
                 </div>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
-                    <input type="submit" class="btn btn-success" value="Thêm">
+                    <input type="submit" class="btn btn-success" value="Sửa">
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<!-- Delete Modal HTML -->
+<div id="deleteModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <input type="hidden" name="tournamentDeleteID" id="tournamentDeleteID">
+                <div class="modal-header">
+                    <h4 class="modal-title">Xóa thành viên này?</h4>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn chắc chắn xóa giải đấu?</p>
+                    <p class="text-warning"><small>Hành động này sẽ không được phục hồi!</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                    <input type="submit" class="btn btn-danger" value="Xóa">
                 </div>
             </form>
         </div>
     </div>
 </div>
-<!--&lt;!&ndash; Delete Modal HTML &ndash;&gt;-->
-<!--<div id="deleteMemberModal" class="modal fade">-->
-<!--    <div class="modal-dialog">-->
-<!--        <div class="modal-content">-->
-<!--            <form>-->
-<!--                <div class="modal-header">-->
-<!--                    <h4 class="modal-title">Xóa thành viên này?</h4>-->
-<!--                    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"></button>-->
-<!--                </div>-->
-<!--                <div class="modal-body">-->
-<!--                    <p>Bạn chắc chắn xóa thành viên này khỏi đội?</p>-->
-<!--                    <p class="text-warning"><small>Hành động này sẽ không được phục hồi!</small></p>-->
-<!--                </div>-->
-<!--                <div class="modal-footer">-->
-<!--                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">-->
-<!--                    <input type="submit" class="btn btn-danger" value="Xóa">-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-<!--<div id="deleteAllMembersModal" class="modal fade">-->
+<!--<div id="deleteAllModal" class="modal fade">-->
 <!--    <div class="modal-dialog">-->
 <!--        <div class="modal-content">-->
 <!--            <form>-->
@@ -191,5 +200,19 @@
 <!--</div>-->
 
 {{#section 'script'}}
+    <script>
 
+        $(".edit").click(function() {
+            const id = $(this).children('input').val();
+            console.log(id);
+            $("#tournamentEditID").val(id);
+        });
+
+        $(".delete").click(function() {
+            const id = $(this).children('input').val();
+            console.log(id);
+            $("#tournamentDeleteID").val(id);
+        });
+
+    </script>
 {{/section}}

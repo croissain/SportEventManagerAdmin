@@ -4,7 +4,16 @@ const Op = Sequelize.Op;
 
 exports.findAllTournaments = async() => {
     return await models.GiaiDau.findAll({
-        raw: true,
+        raw: true
+    });
+}
+
+exports.findTournamentById = async(id, raw = false) => {
+    return await models.GiaiDau.findOne({
+        raw: raw,
+        where: {
+            MaGD: id
+        }
     });
 }
 
@@ -44,3 +53,31 @@ exports.addTournament = async (tournamentName, tournamentMinAge, tournamentMaxAg
         return false;
     }
 }
+
+
+exports.editTournament = async (tournamentId, tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam) => {
+
+    const tournament = await this.findTournamentById(tournamentId);
+
+    tournamentName = tournamentName ||  tournament.TenGD;
+    tournamentMinAge = tournamentMinAge ||  tournament.DoTuoiTGNhoNhat;
+    tournamentMaxAge = tournamentMaxAge ||  tournament.DoTuoiTGLonNhat;
+    tournamentNumberTeam = tournamentNumberTeam ||  tournament.SoDBThamGia;
+
+    try {
+
+        await tournament.update({
+            TenGD: tournamentName,
+            DoTuoiTGNhoNhat: tournamentMinAge,
+            DoTuoiTGLonNhat: tournamentMaxAge,
+            SoDBThamGia: tournamentNumberTeam
+        })
+
+        await tournament.save();
+        return tournament;
+
+    } catch (error) {
+        return false;
+    }
+}
+

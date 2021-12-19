@@ -17,6 +17,14 @@ class TournamentController {
 
         res.redirect('/tournament');
     }
+
+    editTournament = async(req, res, next) => {
+
+        const {tournamentEditID, tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam} = req.query;
+        const tournament = await TournamentService.editTournament(tournamentEditID, tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam);
+
+        res.redirect('/tournament');
+    }
 }
 
 module.exports = new TournamentController;
