@@ -46,8 +46,11 @@
                     <td>{{TenGD}}</td>
                     <td>{{DoTuoiTGNhoNhat}}</td>
                     <td>{{DoTuoiTGLonNhat}}</td>
-                    <td>
-                        Chi tiết
+                    <td class="text-center">
+                        <a href="">
+                            Chi tiết
+                            <i class="fas fa-info-circle"></i>
+                        </a>
                     </td>
                     <td>
                         <a href="#editModal" class="edit" data-toggle="modal">
@@ -115,7 +118,7 @@
     <div class="modal-dialog">
         <div class="modal-content" id="editContentModal">
             <form action="/tournament/edit" method="get">
-                <input type="hidden" name="tournamentEditID" id="tournamentEditID">
+                <input type="hidden" name="editID" id="editID">
                 <div class="modal-header">
                     <h4 class="modal-title">Sửa giải đấu</h4>
                     <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"></button>
@@ -123,19 +126,19 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Tên giải đấu</label>
-                        <input name="tournamentName" type="text" class="form-control" required>
+                        <input name="tournamentName" type="text" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Độ tuổi nhỏ nhất</label>
-                        <input name="tournamentMinAge"  type="number" class="form-control" required>
+                        <input name="tournamentMinAge"  type="number" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Độ tuổi lớn nhất</label>
-                        <input name="tournamentMaxAge"  type="number" class="form-control" required>
+                        <input name="tournamentMaxAge"  type="number" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Số đội bóng</label>
-                        <input name="tournamentNumberTeam"  type="number" class="form-control" required>
+                        <input name="tournamentNumberTeam"  type="number" class="form-control">
                     </div>
                     <!--                    <div class="form-group">-->
                     <!--                        <label>Ngày bắt đầu</label>-->
@@ -161,7 +164,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form>
-                <input type="hidden" name="tournamentDeleteID" id="tournamentDeleteID">
+                <input type="hidden" name="deleteID" id="deleteID">
                 <div class="modal-header">
                     <h4 class="modal-title">Xóa thành viên này?</h4>
                     <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"></button>
@@ -205,13 +208,13 @@
         $(".edit").click(function() {
             const id = $(this).children('input').val();
             console.log(id);
-            $("#tournamentEditID").val(id);
+            $("#editID").val(id);
         });
 
         $(".delete").click(function() {
             const id = $(this).children('input').val();
             console.log(id);
-            $("#tournamentDeleteID").val(id);
+            $("#deleteID").val(id);
         });
 
     </script>

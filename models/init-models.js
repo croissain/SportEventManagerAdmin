@@ -1,4 +1,5 @@
 var DataTypes = require("sequelize").DataTypes;
+var _Admin = require("./Admin");
 var _BanThang = require("./BanThang");
 var _BangDau = require("./BangDau");
 var _CauThu = require("./CauThu");
@@ -11,6 +12,7 @@ var _TranDau = require("./TranDau");
 var _VongDau = require("./VongDau");
 
 function initModels(sequelize) {
+  var Admin = _Admin(sequelize, DataTypes);
   var BanThang = _BanThang(sequelize, DataTypes);
   var BangDau = _BangDau(sequelize, DataTypes);
   var CauThu = _CauThu(sequelize, DataTypes);
@@ -48,6 +50,7 @@ function initModels(sequelize) {
   VongDau.hasMany(TranDau, { as: "TranDaus", foreignKey: "MaVD"});
 
   return {
+    Admin,
     BanThang,
     BangDau,
     CauThu,

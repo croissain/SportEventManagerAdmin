@@ -20,8 +20,8 @@ class TournamentController {
 
     editTournament = async(req, res, next) => {
 
-        const {tournamentEditID, tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam} = req.query;
-        const tournament = await TournamentService.editTournament(tournamentEditID, tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam);
+        const {editID, tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam} = req.query;
+        const tournament = await TournamentService.editTournament(editID, tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam);
 
         res.redirect('/tournament');
     }

@@ -4,12 +4,17 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const exphbs = require('express-handlebars');
+const dotenv = require('dotenv');
 
 const indexRouter = require('./routes/index');
 const tournamentRouter = require('./routes/tournament');
+const teamRouter = require('./routes/team');
 
 
 const expressHandlebarsSections = require('express-handlebars-sections');
+
+const passport = require('passport');
+const session = require('express-session');
 
 
 
@@ -52,6 +57,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/tournament', tournamentRouter);
+app.use('/team', teamRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
