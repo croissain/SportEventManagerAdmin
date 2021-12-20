@@ -9,6 +9,7 @@ var _GiaiDau = require("./GiaiDau");
 var _NguoiDangKy = require("./NguoiDangKy");
 var _SanDau = require("./SanDau");
 var _TranDau = require("./TranDau");
+var _Video = require("./Video");
 var _VongDau = require("./VongDau");
 
 function initModels(sequelize) {
@@ -22,6 +23,7 @@ function initModels(sequelize) {
   var NguoiDangKy = _NguoiDangKy(sequelize, DataTypes);
   var SanDau = _SanDau(sequelize, DataTypes);
   var TranDau = _TranDau(sequelize, DataTypes);
+  var Video = _Video(sequelize, DataTypes);
   var VongDau = _VongDau(sequelize, DataTypes);
 
   DoiBong.belongsTo(BangDau, { as: "MaBD_BangDau", foreignKey: "MaBD"});
@@ -60,6 +62,7 @@ function initModels(sequelize) {
     NguoiDangKy,
     SanDau,
     TranDau,
+    Video,
     VongDau,
   };
 }
