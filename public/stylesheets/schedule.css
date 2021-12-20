@@ -1,0 +1,21 @@
+/* .dhx_cal_tab {
+    color: #028058 !important;
+}
+
+.dhx_cal_tab.active {
+    background-color: #007330 !important;
+    border: 1px solid #007330 !important;
+    color: #fff !important;
+}
+ */
+
+.search-box-schedule {
+    max-width: 150px;
+}
+
+.btn-schedule-generator {
+    border-radius: 50px !important;
+    font-weight: bold !important;
+    line-height: 2.5 !important;
+    color: #fff !important;
+}
