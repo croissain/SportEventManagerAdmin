@@ -106,6 +106,7 @@ body{
 .modal form label {
     font-weight: normal;
 }
+
 .btn-add {
     background-color: #fff !important;
     border: 2px solid #ccc !important;
@@ -115,7 +116,8 @@ body{
 }
 
 .btn-add span,
-.btn-delete span {
+.btn-delete span,
+.btn-search span {
     margin-bottom: 0 !important;
 }
 
@@ -130,11 +132,26 @@ body{
     transition: all 0.3s ease-in-out;
 }
 
+.btn-search {
+    background-color: #fff !important;
+    border: 2px solid #ccc !important;
+    color: #007330 !important;
+    border-radius: 15px !important;
+    transition: all 0.3s ease-in-out;
+}
+
+
 .admin-container{
     padding-top: 24px;
     padding-bottom: 24px;
     background-color: var(--body-color);
 }
+
+.btn-search:hover {
+    border: 2px solid #007330 !important;
+    color:#000 !important;
+}
+
 
 .admin-container-content{
     border-radius: 10px;

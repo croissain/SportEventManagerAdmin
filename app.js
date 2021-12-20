@@ -29,7 +29,11 @@ app.engine('.hbs', exphbs.engine({
     createPagination: pagiHelper.createPagination,
     sum: function (a, b) {
       return a + b;
+    },
+    ifEqual: function(arg1, arg2, options) {
+      return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
     }
+
 
   }
 }));

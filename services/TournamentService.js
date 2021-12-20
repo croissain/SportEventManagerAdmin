@@ -8,6 +8,46 @@ exports.findAllTournaments = async() => {
     });
 }
 
+exports.findAllTournamentsAndCount = async(filter, page, limit) => {
+
+    let options = {
+        offset: (page - 1) * limit,
+        limit: limit,
+        order: [
+            ['MaGD', 'ASC'],
+        ],
+        where: {
+        },
+        raw: true
+    }
+
+    if(filter.tournamentId){
+        options.where.MaGD = filter.tournamentId;
+    }
+
+    if(filter.tournamentName){
+        options.where.TenGD = filter.tournamentName;
+    }
+
+    try{
+        const tournaments = await models.GiaiDau.findAndCountAll(options);
+        return tournaments;
+    }catch (e){
+        return false;
+    }
+
+}
+
+exports.findAllTournamentNames = async() => {
+    return await models.GiaiDau.findAll({
+        raw: true,
+        attributes: [
+            "TenGD"
+        ]
+    });
+}
+
+
 exports.findTournamentById = async(id, raw = false) => {
     return await models.GiaiDau.findOne({
         raw: raw,
