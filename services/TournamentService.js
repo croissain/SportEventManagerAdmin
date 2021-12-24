@@ -2,6 +2,11 @@ const {models} = require('../models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
+const TeamService = require('./TeamService')
+const MatchService = require('../services/MatchService');
+
+
+
 exports.findAllTournaments = async() => {
     return await models.GiaiDau.findAll({
         raw: true
@@ -119,5 +124,19 @@ exports.editTournament = async (tournamentId, tournamentName, tournamentMinAge, 
     } catch (error) {
         return false;
     }
+}
+
+exports.deleteTournamentById = async(id) => {
+    const teamIds = await TeamService.findAllTeamIdsByTournamentId(id);
+
+    await MatchService.deleteAllMatchByTeamIds(teamIds);
+    await TeamService.deleteAllTeamByTournamentId(id);
+
+    const tournament = await this.findTournamentById(id);
+    tournament.destroy({
+        where: {
+            MaGD: id
+        }
+    })
 }
 

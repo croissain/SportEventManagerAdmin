@@ -46,10 +46,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATEONLY,
       allowNull: true
     },
-    TySo: {
-      type: DataTypes.STRING(10),
-      allowNull: true
-    },
     DoiThang: {
       type: DataTypes.CHAR(5),
       allowNull: true,
@@ -57,6 +53,14 @@ module.exports = function(sequelize, DataTypes) {
         model: 'DoiBong',
         key: 'MaDB'
       }
+    },
+    SoBanThangDB1: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    SoBanThangDB2: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
     sequelize,
@@ -65,7 +69,7 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
     indexes: [
       {
-        name: "PK__TranDau__272500691DE57479",
+        name: "PK__TranDau__272500691A14E395",
         unique: true,
         fields: [
           { name: "MaTD" },

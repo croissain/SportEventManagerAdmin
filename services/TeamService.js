@@ -5,9 +5,21 @@ const Op = Sequelize.Op;
 
 const PlayerService = require('../services/PlayerService')
 
-exports.findAllTeams = async() => {
+
+exports.findAllTeamIdsByTournamentId = async (tournamentId, raw = false) => {
+    const teamIds = await models.DoiBong.findAll({
+        where: ({MaGD: tournamentId}),
+        attributes: ['MaDB'],
+    });
+
+    return teamIds.map(function (current) {
+        return current.MaDB;
+    });
+}
+
+exports.findAllTeams = async(raw = false) => {
     return await models.DoiBong.findAll({
-        raw: true
+        raw: raw
     });
 }
 
@@ -84,6 +96,23 @@ exports.deleteTeamById = async(id) => {
         const deleteTeam = await models.DoiBong.destroy({
             where: {
                 MaDB: id
+            }
+        });
+        return true;
+    }catch (e){
+        return false;
+    }
+}
+
+exports.deleteAllTeamByTournamentId = async(tournamentId) => {
+    try{
+
+        const teamIds = await this.findAllTeamIdsByTournamentId(tournamentId);
+        await PlayerService.deletePlayerByTeamIds(teamIds);
+
+        const deleteTeams = await models.DoiBong.destroy({
+            where: {
+                MaGD: tournamentId
             }
         });
         return true;

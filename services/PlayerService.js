@@ -33,11 +33,11 @@ exports.deletePlayerById = async(id) => {
     }
 }
 
-exports.deletePlayerByTeamId = async(teamId) => {
+exports.deletePlayerByTeamIds = async(teamIds) => {
     try{
         const deletePlayers = await models.CauThu.destroy({
             where: {
-                MaDB: teamId
+                MaDB: teamIds
             }
         });
         return true;

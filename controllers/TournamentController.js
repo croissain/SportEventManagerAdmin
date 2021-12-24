@@ -1,6 +1,7 @@
 
 const TournamentService = require('../services/TournamentService');
 
+
 class TournamentController {
     showTournament = async(req, res, next) => {
 
@@ -26,7 +27,7 @@ class TournamentController {
             totalRows: count
         }
 
-        res.render('tournament', {
+        res.render('tournament/tournamentList', {
             title: 'tournament',
             tournaments, pagination, tournamentNames, filter
         });
@@ -51,7 +52,7 @@ class TournamentController {
     deleteTournament = async(req, res, next) => {
         const id = req.query.deleteID;
         console.log("delete id: ", id);
-        // const deleteTournament = await TournamentService.deleteTournamentById(id);
+        const deleteTournament = await TournamentService.deleteTournamentById(id);
         res.redirect('/tournament');
     }
 

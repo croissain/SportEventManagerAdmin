@@ -30,6 +30,14 @@ module.exports = function(sequelize, DataTypes) {
     CauThuVao: {
       type: DataTypes.CHAR(5),
       allowNull: true
+    },
+    GhiChu: {
+      type: DataTypes.STRING(50),
+      allowNull: true
+    },
+    Video: {
+      type: DataTypes.STRING(50),
+      allowNull: true
     }
   }, {
     sequelize,
@@ -38,7 +46,7 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
     indexes: [
       {
-        name: "PK__ChiTietT__CBAB1E4621B6055D",
+        name: "PK__ChiTietT__CBAB1E461DE57479",
         unique: true,
         fields: [
           { name: "MaTD" },

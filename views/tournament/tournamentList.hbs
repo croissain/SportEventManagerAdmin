@@ -9,63 +9,79 @@
         </header>
 
         <div class="table-wrapper">
-            <form method="get" action="/tournament" id="searchForm">
-                <div class="row">
-                    <div class="col-sm-9">
-                        <div class="row">
-                            <div class="col-sm-10">
-                                <div class="row gx-3 gy-2 mb-4 align-items-center">
-                                    <div class="col-sm-3">
-                                        <input type="text" name="tournamentId" class="form-control" id="" placeholder="Mã giải đấu"
-                                            {{#if filter.tournamentId}}
-                                               value="{{filter.tournamentId}}"
-                                            {{/if}}
-                                        >
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="hidden" id="filterTournamentName"
+            <form class="" name="searchForm">
+                <div class="row align-items-start justify-content-between">
+                    <div class="col-lg-10">
+                        <div class="row pb-2">
+                            <div class="pb-2 col-lg-4 col-md-6">
+                                <div class="d-flex justify-content-between">
+                                    <input name="tournamentId" type="text" class="form-control shadow-none" aria-label="Text input with dropdown button" placeholder="ID"
+                                        {{#if filter.tournamentId}}
+                                           value="{{filter.tournamentId}}"
+                                        {{/if}}
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="pb-2 col-lg-4 col-md-6">
+                                <div class="d-flex justify-content-between">
+                                    <div class="select-menu-group">
+                                        <input type="hidden" id="tournamentNameFilterValue"
                                             {{#if filter.tournamentName}}
                                                value="{{filter.tournamentName}}"
                                             {{/if}}
                                         >
-                                        <select name="tournamentName" class="form-select" id="tournamentName">
-                                            <option value="0" selected>Tên giải đấu</option>
+                                        <select name="tournamentName" id="tournamentNameSelectFilter" class="form-select">
+                                            <option value="0">Tất cả</option>
                                             {{#each tournamentNames}}
                                                 <option value="{{TenGD}}">{{TenGD}}</option>
                                             {{/each}}
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row"></div>
                             </div>
-                            <div class="col-sm-2">
-                                <button id="searchBtn" type="submit" class="btn btn-primary left" form="searchForm">
-                                    <i class="fa fa-search"></i>
-                                </button>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-1 d-flex justify-content-end">
+                        <button id="resetBtn" type="button" class="btn btn-warning left">
+                            Reset
+                        </button>
+                        <button id="searchBtn" type="submit" class="btn btn-primary left">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="row pb-2 d-flex align-items-center justify-content-between">
+                    <div class="col-lg-4 pb-2">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-6">
+                                        Số dòng
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="d-flex justify-content-between">
+                                            <input name="limit" id="limit" type="text" class="form-control shadow-none" aria-label="Text input with dropdown button" placeholder="Số dòng"
+                                                {{#if pagination.limit}}
+                                                   value="{{pagination.limit}}"
+                                                {{/if}}
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-lg-4 pb-2 text-center">
                         <a href="#addModal" class="btn btn-success btn-add" data-toggle="modal"><i
                                 class="fas fa-plus-circle"></i> <span>Thêm giải đấu</span></a>
                         <a href="#deleteAllModal" class="btn btn-danger btn-delete" data-toggle="modal"><i
                                 class="fas fa-minus-circle"></i><span>Xóa tất cả</span></a>
                     </div>
                 </div>
-                <div class="row pb-2 d-flex align-items-center">
-                    <div class="col-sm-1">
-                        Số dòng
-                    </div>
-                    <div class="col-sm-2">
-                        <div class="d-flex justify-content-between">
-                            <input name="limit" type="text" class="form-control shadow-none" aria-label="Text input with dropdown button" placeholder="Số dòng"
-
-                                   value="{{pagination.limit}}"
-                            >
-                        </div>
-                    </div>
-                </div>
             </form>
+
             <form action="/tournament/deleteAll" method="get" id="selectedTeamForm">
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
@@ -90,7 +106,7 @@
                         <tr>
                             <td>
                         <span class="custom-checkbox">
-                            <input type="checkbox" id="checkbox1" name="options[]" value="{{MaGD}}">
+                            <input class="select-row-checkbox" type="checkbox" id="checkbox1" name="options[]" value="{{MaGD}}">
                             <label for="checkbox1"></label>
                         </span>
                             </td>
@@ -265,32 +281,27 @@
 
 {{#section 'script'}}
     <script>
-
-        $(".edit").click(function() {
-            const id = $(this).children('input').val();
-            console.log(id);
-            $("#editID").val(id);
-        });
-
-        $(".delete").click(function() {
-            const id = $(this).children('input').val();
-            console.log(id);
-            $("#deleteID").val(id);
-        });
-
         holdSelectedOption = function (){
             //--------------------------------------------------------------------------//
             // Hiển thị option tournamentName sau khi search
-            const filterTournamentName = $('#filterTournamentName').val();
-            console.log("filterTournamentName: ",filterTournamentName);
-            if(filterTournamentName){
-                console.log("selected filterTournamentName: ");
-                $('#tournamentName option[value="0"]').attr('selected',null);
-                $(`#tournamentName option[value="${filterTournamentName}"]`).attr('selected','selected');
+
+            const tournamentNameFilterValue = $('#tournamentNameFilterValue').val();
+            console.log("tournamentNameFilterValue: ",tournamentNameFilterValue);
+
+            if(tournamentNameFilterValue)
+            {
+                $('#tournamentNameSelectFilter').val(tournamentNameFilterValue);
+                console.log("$('#tournamentNameSelectFilter').val: ",$('#tournamentNameSelectFilter').val());
             }
+            else
+            {
+                $('#tournamentNameSelectFilter').val('0');
+            }
+
         }
 
         holdSelectedOption();
     </script>
+    <script src="/javascripts/filterEditDelete.js"></script>
     <script src="/javascripts/pagination.js"></script>
 {{/section}}

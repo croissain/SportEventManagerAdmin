@@ -18,6 +18,14 @@ module.exports = function(sequelize, DataTypes) {
         key: 'MaDB'
       }
     },
+    SoAoCT: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    ViTri: {
+      type: DataTypes.STRING(30),
+      allowNull: true
+    },
     NgSinhCT: {
       type: DataTypes.DATEONLY,
       allowNull: true
@@ -34,12 +42,8 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true
     },
-    SoAo: {
-      type: DataTypes.STRING(5),
-      allowNull: true
-    },
-    ViTri: {
-      type: DataTypes.STRING(30),
+    AnhCT: {
+      type: DataTypes.STRING(50),
       allowNull: true
     }
   }, {
@@ -49,7 +53,7 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
     indexes: [
       {
-        name: "PK__CauThu__27258E741A14E395",
+        name: "PK__CauThu__27258E74164452B1",
         unique: true,
         fields: [
           { name: "MaCT" },

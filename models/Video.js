@@ -9,6 +9,14 @@ module.exports = function(sequelize, DataTypes) {
     Link: {
       type: DataTypes.STRING(200),
       allowNull: false
+    },
+    TieuDe: {
+      type: DataTypes.STRING(100),
+      allowNull: true
+    },
+    MoTa: {
+      type: DataTypes.STRING(500),
+      allowNull: true
     }
   }, {
     sequelize,

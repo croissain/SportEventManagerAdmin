@@ -1,5 +1,4 @@
 var DataTypes = require("sequelize").DataTypes;
-var _Admin = require("./Admin");
 var _BanThang = require("./BanThang");
 var _BangDau = require("./BangDau");
 var _CauThu = require("./CauThu");
@@ -7,13 +6,12 @@ var _ChiTietTD = require("./ChiTietTD");
 var _DoiBong = require("./DoiBong");
 var _GiaiDau = require("./GiaiDau");
 var _NguoiDangKy = require("./NguoiDangKy");
+var _NhanVien = require("./NhanVien");
 var _SanDau = require("./SanDau");
 var _TranDau = require("./TranDau");
-var _Video = require("./Video");
 var _VongDau = require("./VongDau");
 
 function initModels(sequelize) {
-  var Admin = _Admin(sequelize, DataTypes);
   var BanThang = _BanThang(sequelize, DataTypes);
   var BangDau = _BangDau(sequelize, DataTypes);
   var CauThu = _CauThu(sequelize, DataTypes);
@@ -21,9 +19,9 @@ function initModels(sequelize) {
   var DoiBong = _DoiBong(sequelize, DataTypes);
   var GiaiDau = _GiaiDau(sequelize, DataTypes);
   var NguoiDangKy = _NguoiDangKy(sequelize, DataTypes);
+  var NhanVien = _NhanVien(sequelize, DataTypes);
   var SanDau = _SanDau(sequelize, DataTypes);
   var TranDau = _TranDau(sequelize, DataTypes);
-  var Video = _Video(sequelize, DataTypes);
   var VongDau = _VongDau(sequelize, DataTypes);
 
   DoiBong.belongsTo(BangDau, { as: "MaBD_BangDau", foreignKey: "MaBD"});
@@ -42,6 +40,8 @@ function initModels(sequelize) {
   GiaiDau.hasMany(DoiBong, { as: "DoiBongs", foreignKey: "MaGD"});
   DoiBong.belongsTo(NguoiDangKy, { as: "MaNDK_NguoiDangKy", foreignKey: "MaNDK"});
   NguoiDangKy.hasMany(DoiBong, { as: "DoiBongs", foreignKey: "MaNDK"});
+  GiaiDau.belongsTo(NhanVien, { as: "MaNV_NhanVien", foreignKey: "MaNV"});
+  NhanVien.hasMany(GiaiDau, { as: "GiaiDaus", foreignKey: "MaNV"});
   TranDau.belongsTo(SanDau, { as: "MaSD_SanDau", foreignKey: "MaSD"});
   SanDau.hasMany(TranDau, { as: "TranDaus", foreignKey: "MaSD"});
   BanThang.belongsTo(TranDau, { as: "MaTD_TranDau", foreignKey: "MaTD"});
@@ -52,7 +52,6 @@ function initModels(sequelize) {
   VongDau.hasMany(TranDau, { as: "TranDaus", foreignKey: "MaVD"});
 
   return {
-    Admin,
     BanThang,
     BangDau,
     CauThu,
@@ -60,9 +59,9 @@ function initModels(sequelize) {
     DoiBong,
     GiaiDau,
     NguoiDangKy,
+    NhanVien,
     SanDau,
     TranDau,
-    Video,
     VongDau,
   };
 }
