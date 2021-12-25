@@ -30,6 +30,12 @@ exports.findAllTeams = async(raw = false) => {
     });
 }
 
+exports.findAndCountAllTeams = async () => {
+    return await models.DoiBong.findAndCountAll({
+        raw: true,
+    });
+}
+
 exports.findAllTeamNames = async() => {
     return await models.DoiBong.findAll({
         raw: true,
