@@ -87,15 +87,17 @@
                     <thead>
                     <tr>
                         <th>
-                        <span class="custom-checkbox">
-                            <input type="checkbox" id="selectAll">
-                            <label for="selectAll"></label>
-                        </span>
+                            <span class="custom-checkbox">
+                                <input type="checkbox" id="selectAll">
+                                <label for="selectAll"></label>
+                            </span>
                         </th>
                         <th>Mã giải đấu</th>
+                        <th>Tên giải đấu</th>
                         <th>Độ tuổi lớn nhất</th>
                         <th>Độ tuổi nhỏ nhất</th>
                         <th>Số đội bóng tham gia</th>
+                        <th>Hạn cuối đăng ký</th>
                         <th>Chi tiết</th>
                         <th>Sửa/Xóa</th>
 
@@ -105,17 +107,19 @@
                     {{#each tournaments}}
                         <tr>
                             <td>
-                        <span class="custom-checkbox">
-                            <input class="select-row-checkbox" type="checkbox" id="checkbox1" name="options[]" value="{{MaGD}}">
-                            <label for="checkbox1"></label>
-                        </span>
+                                <span class="custom-checkbox">
+                                    <input class="select-row-checkbox" type="checkbox" id="checkbox1" name="options[]" value="{{MaGD}}">
+                                    <label for="checkbox1"></label>
+                                </span>
                             </td>
                             <td>{{MaGD}}</td>
                             <td>{{TenGD}}</td>
-                            <td>{{DoTuoiTGNhoNhat}}</td>
                             <td>{{DoTuoiTGLonNhat}}</td>
+                            <td>{{DoTuoiTGNhoNhat}}</td>
+                            <td>{{SoDBThamGia}}</td>
+                            <td>{{HanCuoiDangKy}}</td>
                             <td class="text-center">
-                                <a href="">
+                                <a href="/tournament/{{MaGD}}">
                                     Chi tiết
                                     <i class="fas fa-info-circle"></i>
                                 </a>

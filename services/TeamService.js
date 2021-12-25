@@ -5,6 +5,13 @@ const Op = Sequelize.Op;
 
 const PlayerService = require('../services/PlayerService')
 
+exports.findAllTeamsByTournamentId = async (tournamentId, raw = false) => {
+    const teams = await models.DoiBong.findAll({
+        where: ({MaGD: tournamentId}),
+        raw: raw
+    });
+    return teams;
+}
 
 exports.findAllTeamIdsByTournamentId = async (tournamentId, raw = false) => {
     const teamIds = await models.DoiBong.findAll({

@@ -1,0 +1,82 @@
+<div class="container">
+    <div class="admin-container-content">
+        <header class="px-4">
+            <h1 class="row py-2 pl-2 text-primary">
+                Danh sách đội của giải đấu {{tournament.TenGD}}
+            </h1>
+        </header>
+        <div class="table-wrapper px-4">
+            <form action="/team/deleteAll" method="get" id="selectedTeamForm">
+                <table id="table" class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            <span class="custom-checkbox">
+                                <input type="checkbox" id="selectAll">
+                                <label for="selectAll"></label>
+                            </span>
+                        </th>
+                        <th>Mã đội bóng</th>
+                        <th>Tên đội bóng</th>
+                        <th>Số thành viên</th>
+                        <th>Màu áo</th>
+                        <th>Điểm</th>
+                        <th>Mã người đăng ký</th>
+                        <th>Mã giải đấu</th>
+                        <th>Mã bảng đấu</th>
+                        <th>Sửa/Xóa</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each teams}}
+                        <tr>
+                            <td>
+                        <span class="custom-checkbox">
+                            <input type="checkbox" id="checkbox1" name="options[]" value="{{MaDB}}">
+                            <label for="checkbox1"></label>
+                        </span>
+                            </td>
+
+                            <td>{{MaDB}}</td>
+                            <td>{{TenDB}}</td>
+                            <td>{{SoThanhVien}}</td>
+                            <td>{{MauAo}}</td>
+                            <td>{{Diem}}</td>
+                            <td>{{MaNDK}}</td>
+                            <td>{{MaGD}}</td>
+                            <td>{{MaBD}}</td>
+                            <td>
+                                <a href="#deleteModal" class="delete" data-toggle="modal">
+                                    <input type="hidden" value="{{MaGD}}">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </form>
+        </div>
+
+        <footer class="row justify-content-center">
+            <nav class="col-lg-3 col-md-6 col-sm-9" aria-label="Page navigation example" id="pagination">
+                {{{createPagination pagination paginationClass="pagination"}}}
+            </nav>
+        </footer>
+    </div>
+</div>
+
+{{#section 'script'}}
+    <script>
+        $(".delete").click(function() {
+            const id = $(this).children('input').val();
+            console.log("deleteID: ",id);
+            $("#deleteID").val(id);
+        });
+
+        holdSelectedOption();
+
+    </script>
+
+    <script src="/javascripts/pagination.js"></script>
+{{/section}}
