@@ -10,6 +10,8 @@ const indexRouter = require('./routes/index');
 const tournamentRouter = require('./routes/tournament');
 const teamRouter = require('./routes/team');
 const scheduleRouter = require('./routes/schedule');
+const stadiumRouter = require('./routes/stadium');
+
 const pagiHelper = require('express-handlebars-paginate');
 
 
@@ -69,6 +71,7 @@ app.use('/', indexRouter);
 app.use('/tournament', tournamentRouter);
 app.use('/team', teamRouter);
 app.use('/schedule', scheduleRouter);
+app.use('/stadium', stadiumRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -74,13 +74,24 @@ exports.findTournamentByName = async(name) => {
 
 exports.addTournament = async (tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam) => {
     const maxId = await models.GiaiDau.max('MaGD');
-    const idNumber = maxId.substring(2, 4);
-    const nextIdNumber = parseInt(idNumber) + 1;
-    let nextId = "GD";
-    if (nextIdNumber < 10) {
-        nextId += '0' + nextIdNumber;
-    } else if (nextIdNumber >= 10 && nextIdNumber < 100) {
-        nextId += nextIdNumber;
+
+    let nextId;
+    if (maxId) {
+        let idNumber = maxId.substring(2, 5);
+        let nextIdInt = (parseInt(idNumber) + 1);
+
+        if(nextIdInt > 0 && nextIdInt < 10){
+            nextId = 'GD' + '00' + nextIdInt;
+        }
+        else if(nextIdInt >= 10 && nextIdInt < 100){
+            nextId = 'GD' + '0' + nextIdInt;
+        }
+        else{
+            nextId = 'GD' + nextIdInt;
+        }
+    }
+    else {
+        nextId = "GD001";
     }
 
     try {
