@@ -30,7 +30,7 @@ class TeamController {
             totalRows: count
         }
 
-        res.render('team', {
+        res.render('team/teamList', {
             title: 'teams',
             teams, pagination, teamNames, tournamentNames, filter
 
@@ -40,14 +40,14 @@ class TeamController {
     deleteTeam = async(req, res, next) => {
         const id = req.query.deleteID;
         console.log("delete id: ", id);
-        // const deleteTeam = await TeamService.deleteTeamById(id);
-        res.redirect('/team');
+        const deleteTeam = await TeamService.deleteTeamByIds(id);
+        res.redirect('back');
     }
 
     deleteAllSelectedTeam = async(req, res, next) => {
-        const options = req.query.options;
-        console.log("delete all id: ", options);
-        // const deleteTeam = await TeamService.deleteTeamById(id);
+        const idOptions = req.query.idOptions;
+        console.log("delete all id: ", idOptions);
+        const deleteTeam = await TeamService.deleteTeamByIds(idOptions);
         res.redirect('/team');
     }
 

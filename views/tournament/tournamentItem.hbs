@@ -6,7 +6,19 @@
             </h1>
         </header>
         <div class="table-wrapper px-4">
-            <form action="/team/deleteAll" method="get" id="selectedTeamForm">
+            <form class="" name="searchForm">
+                <div class="row pb-2 d-flex align-items-center justify-content-between">
+                    <div class="col-lg-4 pb-2">
+
+                    </div>
+                    <div class="col-lg-4 pb-2 text-center">
+                        <a href="#deleteAllModal" class="btn btn-danger btn-delete" data-toggle="modal"><i
+                                class="fas fa-minus-circle"></i><span>Xóa tất cả</span></a>
+                    </div>
+                </div>
+            </form>
+
+            <form action="/team/deleteAll" method="get" id="selectedForm">
                 <table id="table" class="table table-striped table-bordered table-hover">
                     <thead>
                     <tr>
@@ -32,7 +44,7 @@
                         <tr>
                             <td>
                         <span class="custom-checkbox">
-                            <input type="checkbox" id="checkbox1" name="options[]" value="{{MaDB}}">
+                            <input class="select-row-checkbox" type="checkbox" id="checkbox1" name="idOptions[]" value="{{MaDB}}">
                             <label for="checkbox1"></label>
                         </span>
                             </td>
@@ -46,10 +58,12 @@
                             <td>{{MaGD}}</td>
                             <td>{{MaBD}}</td>
                             <td>
-                                <a href="#deleteModal" class="delete" data-toggle="modal">
-                                    <input type="hidden" value="{{MaGD}}">
-                                    <i class="fas fa-trash"></i>
-                                </a>
+                                {{#unless ../isDeadlineTournament}}
+                                    <a href="#deleteModal" class="delete" data-toggle="modal">
+                                        <input type="hidden" value="{{MaDB}}">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                {{/unless}}
                             </td>
                         </tr>
                     {{/each}}
@@ -66,17 +80,52 @@
     </div>
 </div>
 
+<!-- Delete Modal HTML -->
+<div id="deleteModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="get" action="/team/delete">
+                <input type="hidden" name="deleteID" id="deleteID">
+                <div class="modal-header">
+                    <h4 class="modal-title">Xóa đội này?</h4>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn chắc chắn xóa đội?</p>
+                    <p class="text-warning"><small>Hành động này sẽ không được phục hồi!</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                    <input type="submit" class="btn btn-danger" value="Xóa">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="deleteAllModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div>
+                <div class="modal-header">
+                    <h4 class="modal-title">Xóa tất cả thành viên?</h4>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn chắc chắn xóa tất cả thành viên khỏi đội?</p>
+                    <p class="text-warning"><small>Hành động này sẽ không được phục hồi!</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                    <button type="submit" class="btn btn-danger" form="selectedForm">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {{#section 'script'}}
-    <script>
-        $(".delete").click(function() {
-            const id = $(this).children('input').val();
-            console.log("deleteID: ",id);
-            $("#deleteID").val(id);
-        });
-
-        holdSelectedOption();
-
-    </script>
+    <script src="/javascripts/filterEditDelete.js"></script>
 
     <script src="/javascripts/pagination.js"></script>
 {{/section}}

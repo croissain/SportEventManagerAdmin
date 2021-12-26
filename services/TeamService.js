@@ -103,12 +103,12 @@ exports.findTeamById = async (id, raw = false) => {
     });
 }
 
-exports.deleteTeamById = async(id) => {
+exports.deleteTeamByIds = async(ids) => {
     try{
-        const deletePlayers = await PlayerService.deletePlayerByTeamId(id);
+        const deletePlayers = await PlayerService.deletePlayerByTeamIds(ids);
         const deleteTeam = await models.DoiBong.destroy({
             where: {
-                MaDB: id
+                MaDB: ids
             }
         });
         return true;

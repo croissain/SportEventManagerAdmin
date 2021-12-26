@@ -126,16 +126,16 @@ exports.editTournament = async (tournamentId, tournamentName, tournamentMinAge, 
     }
 }
 
-exports.deleteTournamentById = async(id) => {
-    const teamIds = await TeamService.findAllTeamIdsByTournamentId(id);
+exports.deleteTournamentByIds = async(ids) => {
+    const teamIds = await TeamService.findAllTeamIdsByTournamentId(ids);
 
     await MatchService.deleteAllMatchByTeamIds(teamIds);
-    await TeamService.deleteAllTeamByTournamentId(id);
+    await TeamService.deleteAllTeamByTournamentId(ids);
 
-    const tournament = await this.findTournamentById(id);
+    const tournament = await this.findTournamentById(ids);
     tournament.destroy({
         where: {
-            MaGD: id
+            MaGD: ids
         }
     })
 }

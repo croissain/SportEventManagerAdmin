@@ -22,7 +22,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    MatKhauNDK: {
+    MatKhauNV: {
       type: DataTypes.STRING(200),
       allowNull: true
     }

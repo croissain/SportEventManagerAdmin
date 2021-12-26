@@ -42,6 +42,12 @@ class TournamentController {
         const teams = await TeamService.findAllTeamsByTournamentId(id, true);
         const tournament = await TournamentService.findTournamentById(id, true);
 
+        const deadline =  new Date(tournament.HanCuoiDangKy);
+        const now = new Date();
+        let isDeadlineTournament = undefined;
+        if (now.getTime() >= deadline.getTime()) {
+            isDeadlineTournament = true;
+        }
         // const data = req.query;
         //
         // const filter = {
@@ -67,7 +73,7 @@ class TournamentController {
         res.render('tournament/tournamentItem', {
             title: 'tournament details',
             // tournaments, pagination, tournamentNames, filter
-            teams, tournament
+            teams, tournament, isDeadlineTournament
         });
     }
 
@@ -95,9 +101,9 @@ class TournamentController {
     }
 
     deleteAllSelectedTournament = async(req, res, next) => {
-        const options = req.query.options;
-        console.log("delete all id: ", options);
-        // const deleteTournament = await TournamentService.deleteTournamentById(id);
+        const idOptions = req.query.idOptions;
+        console.log("delete all id: ", idOptions);
+        const deleteTournament = await TournamentService.deleteTournamentByIds(idOptions);
         res.redirect('/tournament');
     }
 }
