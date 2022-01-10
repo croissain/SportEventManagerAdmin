@@ -41,73 +41,39 @@
     <p class="label">Ghi chú</p>
     <div class="score-note">
         <ul class="matches-list">
+            {{#each teamArr}}
             <li class="match-item mb-3">
                 <div class="d-flex">
                     <div class="match-item__match d-flex">
                         <div class="match-item__match-left d-flex align-items-center">
                             <img src="/img/logo1.png" alt="" class="match__logo match__match-left-logo">
-                            <p class="match-item__match-left-name">ĐH NN&CN VN</p>
+                            <p class="match-item__match-left-name">{{this.team1.TenDB}}</p>
                         </div>
                         <span class="label">vs</span>
                         <div class="match-item__match-right d-flex align-items-center">
                             <img src="/img/logo2.png" alt="" class="match__logo match__match-right-logo">
-                            <p class="match-item__match-right-name">ĐH VH TP.HCM</p>
+                            <p class="match-item__match-right-name">{{this.team2.TenDB}}</p>
                         </div>
                     </div>
-                    <div class="match-item__info d-flex flex-wrap flex-grow-1">
+                    <div class="match-item__info d-flex flex-wrap ">
                         <div class="match-item__time d-flex">
                             <span><i class="fas fa-clock match-item__icon"></i></span>
-                            <p class="match-item__time-text">6:30 AM</p>
+                            <p class="match-item__time-text">{{this.match.GioBatDau}}</p>
                         </div>
                         <div class="match-item__location d-flex">
                             <span><i class="fas fa-map-marker-alt match-item__icon"></i></span>
-                            <p class="match-item__location-text align-items-center">KWANGYA</p>
+                            <p class="match-item__location-text align-items-center">{{this.match.MaSD}}</p>
                         </div>
                     </div>
-                    <span class="match-item__detail">
-                        <i class="fas fa-arrow-right"></i>
+                    <span class="match-item__detail flex-grow-1">
+                        <a class="text-end" href="/record/{{this.match.MaTD}}/edit">Chỉnh sửa</a>
                     </span>
                 </div>
-                <div class="match-item__monify d-flex">
+                {{!-- <div class="match-item__monify d-flex">
                     <div class="">
-                        <!-- <button class="btn btn-success tab-title">Ghi điểm</button>
-                                <button class="btn btn-success tab-title">Chỉnh sửa</button>
-                                <button class="btn btn-success tab-title">Ghi chú</button>
-                                <div class="tab-content">
-                                    <div class="team-score">
-                                        <div class="team-score__left">
-                                            <p class="team-score__left-name">ĐH NN&CN VN</p>
-                                            <input type="number" class="team-score__left-score">
-                                        </div>
-                                        <div class="team-score__right">
-                                            <p class="team-score__right-name">ĐH VH TP.HCM</p>
-                                            <input type="number" class="team-score__right-score">
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-success">Lưu</button>
-                                </div>
-                                <div class="tab-content">
-                                    <div class="edit-match">
-                                        
-                                    </div>
-                                    <button class="btn btn-success">Lưu</button>
-                                </div>
-                                <div class="tab-content">
-                                    <div class="team-score">
-                                        <div class="team-score__left">
-                                            <p class="team-score__left-name">ĐH NN&CN VN</p>
-                                            <input type="number" class="team-score__left-score">
-                                        </div>
-                                        <div class="team-score__right">
-                                            <p class="team-score__right-name">ĐH VH TP.HCM</p>
-                                            <input type="number" class="team-score__right-score">
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-success">Lưu</button>
-                                </div> -->
                         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                             <li class="nav-item tab-title" role="presentation">
-                                <button class="score-note nav-link active" id="pills-team-score-tab"
+                                <button class="score-note nav-link" id="pills-team-score-tab"
                                     data-bs-toggle="pill" data-bs-target="#pills-team-score" type="button" role="tab"
                                     aria-selected="true">Ghi điểm</button>
                             </li>
@@ -123,7 +89,7 @@
                             </li>
                         </ul>
                         <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade show active" id="pills-team-score" role="tabpanel">
+                            <div class="tab-pane fade " id="pills-team-score" role="tabpanel">
                                 <div class="team-score d-flex mb-3">
                                     <div class="team-score__left me-5">
                                         <p class="team-score__left-name mb-1">ĐH NN&CN VN</p>
@@ -148,8 +114,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </li>
+            {{/each}}
         </ul>
     </div>
 </div>

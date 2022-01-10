@@ -94,12 +94,12 @@ exports.findAllTeamsAndCount = async(filter, page, limit) => {
 
 }
 
-exports.findTeamById = async (id, raw = false) => {
+exports.findTeamById = async (id) => {
     return await models.DoiBong.findOne({
-        raw: raw,
         where: {
-            MaGD: id
-        }
+            MaDB: id
+        },
+        raw: true,
     });
 }
 

@@ -1,0 +1,45 @@
+<div class="container">
+    <!-- page title area end -->
+    <div class="main-content-inner">
+        <div class="row">
+            <div class="col-12 mt-5">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Edit member form-->
+                        <h4 class="header-title">Ghi chú bàn thắng</h4>
+                        <form method="POST" action="/record/{{match.MaTD}}?_method=PUT" class="needs-validation mt-3"
+                            novalidate="">
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label for="team1_score">Điểm đội 1</label>
+                                        <input type="number" min="0" class="form-control" id="team1_score" name="SoBanThangDB1"
+                                            required="" value="{{match.SoBanThangDB1}}">
+                                        <div class="invalid-feedback">Xin hãy cung cấp thông tin hợp lệ.</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label for="team2_score">Điểm đội 2</label>
+                                        <input type="number" min="0" class="form-control" id="team2_score" name="SoBanThangDB2"
+                                            required="" value="{{match.SoBanThangDB2}}">
+                                        <div class="invalid-feedback">Xin hãy cung cấp thông tin hợp lệ.</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label for="match-note">Ghi chú</label><br>
+                                        <textarea id="match-note" name="GhiChu" rows="5" cols="50" value="{{match.GhiChu}}"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary" type="submit">Cập nhật</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
