@@ -48,8 +48,10 @@ function initModels(sequelize) {
   TranDau.hasMany(BanThang, { as: "BanThangs", foreignKey: "MaTD"});
   ChiTietTD.belongsTo(TranDau, { as: "MaTD_TranDau", foreignKey: "MaTD"});
   TranDau.hasMany(ChiTietTD, { as: "ChiTietTDs", foreignKey: "MaTD"});
+  TranDau.belongsTo(VongDau, { as: "MaGD_VongDau", foreignKey: "MaGD"});
+  VongDau.hasMany(TranDau, { as: "TranDaus", foreignKey: "MaGD"});
   TranDau.belongsTo(VongDau, { as: "MaVD_VongDau", foreignKey: "MaVD"});
-  VongDau.hasMany(TranDau, { as: "TranDaus", foreignKey: "MaVD"});
+  VongDau.hasMany(TranDau, { as: "MaVD_TranDaus", foreignKey: "MaVD"});
 
   return {
     BanThang,

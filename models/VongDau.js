@@ -1,6 +1,11 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('VongDau', {
+    MaGD: {
+      type: DataTypes.CHAR(5),
+      allowNull: false,
+      primaryKey: true
+    },
     MaVD: {
       type: DataTypes.CHAR(5),
       allowNull: false,
@@ -20,6 +25,7 @@ module.exports = function(sequelize, DataTypes) {
         name: "PK__VongDau__2725102E07020F21",
         unique: true,
         fields: [
+          { name: "MaGD" },
           { name: "MaVD" },
         ]
       },

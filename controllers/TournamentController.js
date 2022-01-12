@@ -106,6 +106,29 @@ class TournamentController {
         const deleteTournament = await TournamentService.deleteTournamentByIds(idOptions);
         res.redirect('/tournament');
     }
+
+    showSchedulePage = async(req, res, next) => {
+        const id = req.params.id;
+        const tournament = await TournamentService.findTournamentById(id, true);
+        res.render('tournament/tournamentSchedule', {
+            title: 'tournament schedule',
+            tournament
+
+        });
+    }
+
+    schedule  = async(req, res, next) => {
+        const id = req.params.id;
+        const tournament = await TournamentService.findTournamentById(id, true);
+
+        const matchs = await TournamentService.scheduleByTournamentId(id);
+
+        res.render('tournament/tournamentSchedule', {
+            title: 'tournament schedule',
+            tournament
+
+        });
+    }
 }
 
 module.exports = new TournamentController;

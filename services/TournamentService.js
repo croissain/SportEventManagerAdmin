@@ -151,3 +151,7 @@ exports.deleteTournamentByIds = async(ids) => {
     })
 }
 
+
+exports.scheduleByTournamentId = async (id) => {
+    return false;
+}
