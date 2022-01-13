@@ -159,7 +159,7 @@ CREATE TABLE public."NhanVien" (
     "SDT_NV" character(10),
     "EmailNV" character varying(50),
     "AnhNV" character varying(50),
-    "MatKhauNDK" character varying(200)
+    "MatKhauNV" character varying(200)
 );
 
 
@@ -185,6 +185,7 @@ CREATE TABLE public."TranDau" (
     "MaTD" character(5) NOT NULL,
     "MaDB1" character(5),
     "MaDB2" character(5),
+    "MaGD" character(5),
     "MaVD" character(5),
     "MaSD" character(5),
     "GioBatDau" time(6) without time zone,
@@ -202,6 +203,7 @@ ALTER TABLE public."TranDau" OWNER TO postgres;
 --
 
 CREATE TABLE public."VongDau" (
+    "MaGD" character(5) NOT NULL,
     "MaVD" character(5) NOT NULL,
     "TenVD" character varying(20)
 );
@@ -294,7 +296,7 @@ ALTER TABLE ONLY public."TranDau"
 --
 
 ALTER TABLE ONLY public."VongDau"
-    ADD CONSTRAINT "PK__VongDau__2725102E07020F21" PRIMARY KEY ("MaVD");
+    ADD CONSTRAINT "PK__VongDau__2725102E07020F21" PRIMARY KEY ("MaGD","MaVD");
 
 
 --
@@ -405,7 +407,7 @@ ALTER TABLE ONLY public."TranDau"
 --
 
 ALTER TABLE ONLY public."TranDau"
-    ADD CONSTRAINT "FK_TranDau_VongDau" FOREIGN KEY ("MaVD") REFERENCES public."VongDau"("MaVD");
+    ADD CONSTRAINT "FK_TranDau_VongDau" FOREIGN KEY ("MaGD","MaVD") REFERENCES public."VongDau"("MaGD","MaVD");
 
 
 --

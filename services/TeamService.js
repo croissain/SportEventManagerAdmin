@@ -6,11 +6,34 @@ const Op = Sequelize.Op;
 const PlayerService = require('../services/PlayerService')
 
 exports.findAllTeamsByTournamentId = async (tournamentId, raw = false) => {
-    const teams = await models.DoiBong.findAll({
-        where: ({MaGD: tournamentId}),
-        raw: raw
-    });
-    return teams;
+    try{
+        const teams = await models.DoiBong.findAll({
+            where: ({MaGD: tournamentId}),
+            raw: raw
+        });
+        return teams;
+    }catch (e){
+        console.log(e);
+        return false;
+    }
+}
+
+exports.findAndCountAllTeamsByTournamentId = async (tournamentId, raw = false) => {
+    return await models.DoiBong.findAndCountAll({
+        where: {
+            MaGD: tournamentId
+        },
+        raw: raw,
+    })
+}
+
+exports.findAndCountAllTeamsByIds = async (teamIds, raw = false) => {
+    return await models.DoiBong.findAndCountAll({
+        where: {
+            MaDB: teamIds
+        },
+        raw: raw,
+    })
 }
 
 exports.findAllTeamIdsByTournamentId = async (tournamentId, raw = false) => {
@@ -24,17 +47,14 @@ exports.findAllTeamIdsByTournamentId = async (tournamentId, raw = false) => {
     });
 }
 
+
 exports.findAllTeams = async(raw = false) => {
     return await models.DoiBong.findAll({
         raw: raw
     });
 }
 
-exports.findAndCountAllTeams = async () => {
-    return await models.DoiBong.findAndCountAll({
-        raw: true,
-    });
-}
+
 
 exports.findAllTeamNames = async() => {
     return await models.DoiBong.findAll({

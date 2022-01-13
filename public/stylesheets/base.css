@@ -140,6 +140,13 @@ body{
     transition: all 0.3s ease-in-out;
 }
 
+.btn-link {
+    background-color: rgba(49, 194, 27, 0.27) !important;
+    border: 2px solid rgb(54, 166, 74) !important;
+    border-radius: 15px !important;
+    transition: all 0.3s ease-in-out;
+}
+
 
 .admin-container{
     padding-top: 24px;

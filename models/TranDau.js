@@ -22,6 +22,14 @@ module.exports = function(sequelize, DataTypes) {
         key: 'MaDB'
       }
     },
+    MaGD: {
+      type: DataTypes.CHAR(5),
+      allowNull: true,
+      references: {
+        model: 'VongDau',
+        key: 'MaVD'
+      }
+    },
     MaVD: {
       type: DataTypes.CHAR(5),
       allowNull: true,

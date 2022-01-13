@@ -1,0 +1,89 @@
+<div class="container">
+    <div class="admin-container-content">
+        <header class="px-4">
+            <h1 class="row py-2 pl-2 text-primary">
+                Kết quả giải đấu {{tournament.TenGD}}
+            </h1>
+        </header>
+        <div>
+            <div class="row pb-2 d-flex align-items-center justify-content-end">
+                <form class="col-lg-4 pb-2 text-center" action="/tournament/{{tournament.MaGD}}/schedule">
+                    <a href="/tournament/{{tournament.MaGD}}/schedulePage" class="btn btn-info btn-link">
+                        <i class="far fa-calendar-alt"></i><span>Xếp lích</span>
+                    </a>
+                </form>
+            </div>
+
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>Mã Trận đấu</th>
+                    <th>Mã Đội 1</th>
+                    <th>Mã đội 2</th>
+                    <th>Mã Vòng đấu</th>
+                    <th>Mã Sẫn đấu</th>
+                    <th>Giờ bắt đầu</th>
+                    <th>Ngày thi đấu</th>
+                    <th>Tỷ số</th>
+                    <th>Đội thắng</th>
+                    <th>Cập nhập</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each matches}}
+                    <tr>
+                        <td>{{MaTD}}</td>
+                        <td>{{MaDB1}}</td>
+                        <td>{{MaDB2}}</td>
+                        <td>{{MaVD}}</td>
+                        <td>{{MaSD}}</td>
+                        <td>{{GioBatDau}}</td>
+                        <td>{{NgThiDau}}</td>
+                        <td>{{TySo}}</td>
+                        <td>{{DoiThang}}</td>
+                        <td>
+                            {{#unless DoiThang}}
+                                <a href="#editModal" class="edit" data-toggle="modal">
+                                    <input type="hidden" value="{{MaTD}}">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                            {{/unless}}
+                        </td>
+
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<!-- Edit Modal HTML -->
+<div id="editModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/tournament/{{tournament.MaGD}}/result">
+                <input type="hidden" name="matchId" id="editID">
+                <div class="form-group m-4">
+                    <label for="team1Goal" class="col-form-label">Số bàn thắng đội thứ 1</label>
+                    <input name="team1Goal" type="number" class="form-control" id="team1Goal" required>
+                </div>
+                <div class="form-group m-4">
+                    <label for="team2Goal" class="col-form-label">Số bàn thắng đội thứ 2</label>
+                    <input name="team2Goal" type="number" class="form-control" id="team2Goal" required>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                    <button type="submit" class="btn btn-danger">Cập nhập</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{{#section 'script'}}
+    <script src="/javascripts/filterEditDelete.js"></script>
+{{/section}}
+

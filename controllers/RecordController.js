@@ -34,6 +34,9 @@ class RecordController {
     }
 
     updateRecord = async (req, res, next) => {
+
+        const matchId = req.params.id;
+
         await models.TranDau.update(req.body, {
             where: {
                 MaTD: req.params.id,

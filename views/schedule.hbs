@@ -40,6 +40,8 @@
                         <th>Ngày thi đấu</th>
                         <th>Tỷ số</th>
                         <th>Đội thắng</th>
+                        <th>Mã giải đấu</th>
+                        <th>Mã vòng đấu</th>
                         <th>Hành động</th>
                     </tr>
                 </thead>
@@ -67,6 +69,8 @@
                             <a href="#deleteMemberModal" class="delete" data-toggle="modal"><i
                                     class="fas fa-trash"></i></a>
                         </td>
+                        <td>{{this.MaGD}}</td>
+                        <td>{{this.MaVD}}</td>
                     </tr>
                     {{/each}}
                 </tbody>
@@ -155,47 +159,7 @@
             </div>
         </div>
     </div>
-    <!-- Delete Modal HTML -->
-    <div id="deleteMemberModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form>
-                    <div class="modal-header">
-                        <h4 class="modal-title">Xóa thành viên này?</h4>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Bạn chắc chắn xóa thành viên này khỏi đội?</p>
-                        <p class="text-warning"><small>Hành động này sẽ không được phục hồi!</small></p>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
-                        <input type="submit" class="btn btn-danger" value="Xóa">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div id="deleteAllMembersModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form>
-                    <div class="modal-header">
-                        <h4 class="modal-title">Xóa tất cả thành viên?</h4>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Bạn chắc chắn xóa tất cả thành viên khỏi đội?</p>
-                        <p class="text-warning"><small>Hành động này sẽ không được phục hồi!</small></p>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
-                        <input type="submit" class="btn btn-danger" value="Xóa">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

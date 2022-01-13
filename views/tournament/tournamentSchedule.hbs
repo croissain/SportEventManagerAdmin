@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="admin-container-content">
+        <header class="px-4">
+            <h1 class="row py-2 pl-2 text-primary">
+                Xếp lịch thi đấu {{tournament.TenGD}}
+            </h1>
+        </header>
+        <div>
+            <div class="row pb-2 d-flex align-items-center justify-content-end">
+                <form class="col-lg-4 pb-2 text-center" action="/tournament/{{tournament.MaGD}}/schedule">
+                    <a href="/tournament/{{tournament.MaGD}}/resultPage" class="btn btn-info btn-link">
+                        <i class="far fa-calendar-alt"></i><span>Kết quả</span>
+                    </a>
+                    <button type="submit" class="btn btn-success">
+                        <i class="far fa-calendar-alt"></i><span>Xếp Lịch thi đấu</span>
+                    </button>
+                </form>
+            </div>
+
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>Mã Trận đấu</th>
+                    <th>Mã Đội 1</th>
+                    <th>Mã đội 2</th>
+                    <th>Mã Vòng đấu</th>
+                    <th>Mã Sẫn đấu</th>
+                    <th>Giờ bắt đầu</th>
+                    <th>Ngày thi đấu</th>
+                    <th>Tỷ số</th>
+                    <th>Đội thắng</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each matches}}
+                    <tr>
+                        <td>{{this.MaTD}}</td>
+                        <td>{{this.MaDB1}}</td>
+                        <td>{{this.MaDB2}}</td>
+                        <td>{{this.MaVD}}</td>
+                        <td>{{this.MaSD}}</td>
+                        <td>{{this.GioBatDau}}</td>
+                        <td>{{this.NgThiDau}}</td>
+                        <td>{{this.TySo}}</td>
+                        <td>{{this.DoiThang}}</td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

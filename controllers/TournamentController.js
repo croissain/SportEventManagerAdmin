@@ -1,6 +1,7 @@
 
 const TournamentService = require('../services/TournamentService');
 const TeamService = require('../services/TeamService');
+const MatchService = require("../services/MatchService");
 
 
 class TournamentController {
@@ -105,6 +106,50 @@ class TournamentController {
         console.log("delete all id: ", idOptions);
         const deleteTournament = await TournamentService.deleteTournamentByIds(idOptions);
         res.redirect('/tournament');
+    }
+
+    showSchedulePage = async(req, res, next) => {
+        const id = req.params.id;
+        const tournament = await TournamentService.findTournamentById(id, true);
+        const matches = await MatchService.findAllMatchByTournamentId(id);
+        res.render('tournament/tournamentSchedule', {
+            title: 'tournament schedule',
+            tournament,
+            matches
+
+        });
+    }
+
+    schedule  = async(req, res, next) => {
+        const id = req.params.id;
+
+        await TournamentService.scheduleByTournamentId(id);
+
+        res.redirect("/tournament/" + id + "/schedulePage");
+    }
+
+    showResultPage = async(req, res, next) => {
+        const id = req.params.id;
+        const tournament = await TournamentService.findTournamentById(id, true);
+        const matches = await MatchService.findAllMatchByTournamentId(id);
+        res.render('tournament/tournamentResult', {
+            title: 'tournament schedule',
+            tournament,
+            matches
+        });
+    }
+
+    updateResult = async(req, res, next) => {
+        const id = req.params.id;
+        const matchId = req.query.matchId;
+        const team1Goal = req.query.team1Goal;
+        const team2Goal = req.query.team2Goal;
+
+        await MatchService.updateResult(matchId, team1Goal, team2Goal);
+
+
+
+        res.redirect("/tournament/" + id + "/resultPage");
     }
 }
 
