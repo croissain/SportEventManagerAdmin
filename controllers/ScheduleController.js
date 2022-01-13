@@ -14,7 +14,8 @@ class ScheduleController {
     }
 
     scheduleGenerate = async (req, res, next) => {
-        const teams = await TeamServices.findAndCountAllTeams();
+        const tournamentId = "GD007";
+        const teams = await TeamServices.findAndCountAllTeamsByTournamentId(tournamentId);
         // console.log(teams.rows);
 
         if (teams.count % 2 === 0) {
@@ -60,7 +61,9 @@ class ScheduleController {
                     console.log(match_id, team1_id, team2_id, start_time, start_date);
 
                     await MatchService.createMatch(match_id, team1_id, team2_id, location, start_time, start_date);
-                } catch (err) { console.log(err) }
+                } catch (err) {
+                    console.log(err)
+                }
             })
         }
         else if (teams.count % 2 !== 0) {
@@ -97,7 +100,9 @@ class ScheduleController {
                     console.log(match_id, team1_id, team2_id, start_time, start_date);
 
                     await MatchService.createMatch(match_id, team1_id, team2_id, location, start_time, start_date);
-                } catch (err) { console.log(err) }
+                } catch (err) {
+                    console.log(err)
+                }
             })
         }
 

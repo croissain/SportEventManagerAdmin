@@ -40,6 +40,8 @@
                         <th>Ngày thi đấu</th>
                         <th>Tỷ số</th>
                         <th>Đội thắng</th>
+                        <th>Mã giải đấu</th>
+                        <th>Mã vòng đấu</th>
                         <th>Hành động</th>
                     </tr>
                 </thead>
@@ -67,6 +69,8 @@
                             <a href="#deleteMemberModal" class="delete" data-toggle="modal"><i
                                     class="fas fa-trash"></i></a>
                         </td>
+                        <td>{{this.MaGD}}</td>
+                        <td>{{this.MaVD}}</td>
                     </tr>
                     {{/each}}
                 </tbody>

@@ -12,6 +12,8 @@ router.get('/deleteAll', TournamentController.deleteAllSelectedTournament);
 router.get('/:id',TournamentController.showTournament);
 router.get('/:id/schedulePage',TournamentController.showSchedulePage);
 router.get('/:id/schedule',TournamentController.schedule);
+router.get('/:id/resultPage',TournamentController.showResultPage);
+router.get('/:id/result',TournamentController.updateResult);
 
 
 
