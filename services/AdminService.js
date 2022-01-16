@@ -4,16 +4,25 @@ const Op = Sequelize.Op;
 const bcrypt = require('bcrypt');
 
 exports.findAllAdmin = async() => {
-    return await models.Admin.findAll({
+    return await models.NhanVien.findAll({
         raw: true,
     });
 }
 
 exports.findUserByEmail = async(email) => {
-    return await models.Admin.findOne({
+    return await models.NhanVien.findOne({
         raw: true,
         where: {
-            Email: email
+            EmailNV: email
+        }
+    });
+}
+
+exports.findAdminByEmail = async(email) => {
+    return await models.NhanVien.findOne({
+        raw: true,
+        where: {
+            EmailNV: email
         }
     });
 }

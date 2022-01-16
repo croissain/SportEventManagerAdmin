@@ -6,11 +6,14 @@ var logger = require('morgan');
 const exphbs = require('express-handlebars');
 const dotenv = require('dotenv');
 
+
 const indexRouter = require('./routes/index');
 const tournamentRouter = require('./routes/tournament');
 const teamRouter = require('./routes/team');
 const stadiumRouter = require('./routes/stadium');
+const authRouter = require('./routes/auth.route');
 
+const authController = require('./controllers/AuthController');
 
 const pagiHelper = require('express-handlebars-paginate');
 
@@ -41,15 +44,6 @@ app.engine('.hbs', exphbs.engine({
 }));
 
 
-
-
-
-
-
-
-
-
-
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -66,10 +60,21 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/tournament', tournamentRouter);
-app.use('/team', teamRouter);
-app.use('/stadium', stadiumRouter);
+// app.use(session({ secret: process.env.SESSION_SECRET }));
+app.use(session({ secret: "cats"}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(function (req, res, next) {
+  res.locals.admin = req.admin;
+  next();
+});
+
+app.use('/auth', authRouter);
+app.use('/', authController.isLogin, indexRouter);
+app.use('/tournament',authController.isLogin, tournamentRouter);
+app.use('/team',authController.isLogin, teamRouter);
+app.use('/stadium',authController.isLogin, stadiumRouter);
 // app.use('/record', recordRouter);
 
 // catch 404 and forward to error handler
