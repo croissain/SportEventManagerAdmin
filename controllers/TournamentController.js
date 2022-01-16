@@ -80,16 +80,16 @@ class TournamentController {
 
     addTournament = async(req, res, next) => {
 
-        const {tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam} = req.query;
-        const tournament = await TournamentService.addTournament(tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam);
+        const {tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam, tournamentDeadline} = req.query;
+        const tournament = await TournamentService.addTournament(tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam, tournamentDeadline);
 
         res.redirect('/tournament');
     }
 
     editTournament = async(req, res, next) => {
 
-        const {editID, tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam} = req.query;
-        const tournament = await TournamentService.editTournament(editID, tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam);
+        const {editID, tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam, tournamentDeadline} = req.query;
+        const tournament = await TournamentService.editTournament(editID, tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam, tournamentDeadline);
 
         res.redirect('/tournament');
     }
@@ -123,9 +123,19 @@ class TournamentController {
     schedule  = async(req, res, next) => {
         const id = req.params.id;
 
-        await TournamentService.scheduleByTournamentId(id);
+        const schedule =  await TournamentService.scheduleByTournamentId(id);
 
-        res.redirect("/tournament/" + id + "/schedulePage");
+
+        if(schedule.success){
+            if(schedule.winner){
+                res.redirect("/tournament/" + id + "/schedulePage");
+            }
+            res.redirect("/tournament/" + id + "/schedulePage");
+        }
+        //Xử lý không xếp lịch được
+        else{
+            res.redirect("/tournament/" + id + "/schedulePage");
+        }
     }
 
     showResultPage = async(req, res, next) => {
@@ -145,7 +155,13 @@ class TournamentController {
         const team1Goal = req.query.team1Goal;
         const team2Goal = req.query.team2Goal;
 
-        await MatchService.updateResult(matchId, team1Goal, team2Goal);
+        if(parseInt(team1Goal) === parseInt(team2Goal)){
+            const winTeam = req.query.winTeam;
+            await MatchService.updateResult(matchId, team1Goal, team2Goal, winTeam);
+        }else {
+            await MatchService.updateResult(matchId, team1Goal, team2Goal);
+        }
+
 
 
 
