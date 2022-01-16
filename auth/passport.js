@@ -38,7 +38,7 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function(admin, done) {
-    done(null, {email: admin.Email, id: admin.HoTen});
+    done(null, {email: admin.EmailNV, id: admin.TenNV});
 });
 
 
@@ -50,7 +50,7 @@ passport.deserializeUser(async function(admin, done) {
 
 async function validPassword(admin,password){
 
-    return bcrypt.compare(password, admin.Password);
+    return bcrypt.compare(password, admin.MatKhauNV);
 }
 
 module.exports = passport;
