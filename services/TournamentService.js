@@ -74,7 +74,7 @@ exports.findTournamentByName = async(name) => {
 }
 
 
-exports.addTournament = async (tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam) => {
+exports.addTournament = async (tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam, tournamentDeadline) => {
     const maxId = await models.GiaiDau.max('MaGD');
 
     let nextId;
@@ -104,6 +104,7 @@ exports.addTournament = async (tournamentName, tournamentMinAge, tournamentMaxAg
                 DoTuoiTGNhoNhat: tournamentMinAge,
                 DoTuoiTGLonNhat: tournamentMaxAge,
                 SoDBThamGia: tournamentNumberTeam,
+                HanCuoiDangKy: tournamentDeadline,
             }
         );
         return tournament;
@@ -113,7 +114,7 @@ exports.addTournament = async (tournamentName, tournamentMinAge, tournamentMaxAg
 }
 
 
-exports.editTournament = async (tournamentId, tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam) => {
+exports.editTournament = async (tournamentId, tournamentName, tournamentMinAge, tournamentMaxAge, tournamentNumberTeam, tournamentDeadline) => {
 
     const tournament = await this.findTournamentById(tournamentId);
 
@@ -128,7 +129,8 @@ exports.editTournament = async (tournamentId, tournamentName, tournamentMinAge, 
             TenGD: tournamentName,
             DoTuoiTGNhoNhat: tournamentMinAge,
             DoTuoiTGLonNhat: tournamentMaxAge,
-            SoDBThamGia: tournamentNumberTeam
+            SoDBThamGia: tournamentNumberTeam,
+            HanCuoiDangKy: tournamentDeadline,
         })
 
         await tournament.save();
@@ -154,41 +156,59 @@ exports.deleteTournamentByIds = async(ids) => {
 }
 
 
-exports.scheduleByTournamentId = async (id) => {
+exports.scheduleByTournamentId = async (tournamentId) => {
 
     try{
-        const lastestState = await StateService.findLatestStateByTournamentId(id, true);
+        const lastestState = await StateService.findLatestStateByTournamentId(tournamentId, true);
         //
         let matchs = new Array();
 
+        //Nếu tồn tại lastestState, thì tìm vòng đấu tiếp theo,
+        // Ngược lại nghĩa là tạo vòng đấu đầu tiên
+
         if(lastestState){
             const lastestStateId = lastestState.MaVD;
-            const state = await StateService.createState(id);
-            const stateId = state.MaVD;
-            const teams = await MatchService.findAndCountAllWinTeamsByTournamentIdAndStateId(id, lastestStateId, true);
 
-            await schedule(teams, id, stateId);
+            const isEndOfState = await StateService.isEndOfState(tournamentId, lastestStateId);
 
-            // await MatchService.randomWinTeam(id, stateId);
+            //Nếu vòng đấu mới nhát đã kết thúc tạo vòng đấu mới
+            if(isEndOfState){
+                const state = await StateService.createState(tournamentId);
+                const stateId = state.MaVD;
+                const teams = await MatchService.findAndCountAllWinTeamsByTournamentIdAndStateId(tournamentId, lastestStateId, true);
 
+                //Chỉ còn 1 dội nghĩa là giải đấu kết thúc
+                if(teams.count === 1){
+                    const winner = teams[0];
+                    return {success: true, winner};
+                }
 
+                await schedule(teams, tournamentId, stateId);
+                return {success: true};
+
+                // await MatchService.randomWinTeam(id, stateId);
+            }
+            //Ngược lại thì ko cho tạo lịch mới
+            else {
+                return {success: false};
+            }
         }
         //lastestState.MaVD không tồn tại, do đó đây là vòng đấu đầu tiên
         else{
             //id là id của tournament
-            const state = await StateService.createState(id);
+            const state = await StateService.createState(tournamentId);
             const stateId = state.MaVD;
-            const teams = await TeamServices.findAndCountAllTeamsByTournamentId(id, true);
-            await schedule(teams, id, stateId);
+            const teams = await TeamServices.findAndCountAllTeamsByTournamentId(tournamentId, true);
+            await schedule(teams, tournamentId, stateId);
 
             // await MatchService.randomWinTeam(id, stateId);
-
+            return {success: true};
 
         }
 
     }catch (e) {
         console.log(e);
-        return false;
+        return {success: false};
     }
 
 }

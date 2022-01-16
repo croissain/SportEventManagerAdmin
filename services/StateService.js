@@ -84,3 +84,36 @@ exports.createState = async (tournamentId, name) => {
     }
 
 }
+
+
+exports.isEndOfState = async (tournamentId, stateID) => {
+    try{
+        //Tìm số trận đấu có        MaGD: tournamentId,  MaVD: stateID,
+        //và đã chưa có độ thắng
+        const matchs = await models.TranDau.findAll({
+            where: {
+                MaGD: tournamentId,
+                MaVD: stateID,
+                DoiThang: null
+            },
+            raw: true
+        })
+
+        const countMatchs = matchs.length;
+
+        //Nếu số trận đấu (chưa có dội thắng) là 0 nghĩa là vòng đấu kết thúc
+        if(countMatchs === 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }catch (e) {
+        console.log(e);
+        return false;
+    }
+
+
+
+
+}

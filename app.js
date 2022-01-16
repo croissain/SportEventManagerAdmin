@@ -9,9 +9,8 @@ const dotenv = require('dotenv');
 const indexRouter = require('./routes/index');
 const tournamentRouter = require('./routes/tournament');
 const teamRouter = require('./routes/team');
-const scheduleRouter = require('./routes/schedule');
 const stadiumRouter = require('./routes/stadium');
-const recordRouter = require('./routes/record');
+
 
 const pagiHelper = require('express-handlebars-paginate');
 
@@ -37,7 +36,6 @@ app.engine('.hbs', exphbs.engine({
     ifEqual: function(arg1, arg2, options) {
       return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
     }
-
 
   }
 }));
@@ -71,9 +69,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/tournament', tournamentRouter);
 app.use('/team', teamRouter);
-app.use('/schedule', scheduleRouter);
 app.use('/stadium', stadiumRouter);
-app.use('/record', recordRouter);
+// app.use('/record', recordRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

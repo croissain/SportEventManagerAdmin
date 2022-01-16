@@ -168,9 +168,10 @@ exports.updateWinTeamByMatchId = async (matchId, teamId) => {
     return match;
 }
 
-exports.updateResult = async (matchId, team1Goal, team2Goal) => {
+exports.updateResult = async (matchId, team1Goal, team2Goal, winTeam) => {
     const match = await this.findMatchById(matchId);
-    let winTeam;
+
+
 
     const goal1 = parseInt(team1Goal);
     const goal2 = parseInt(team2Goal);
@@ -181,15 +182,18 @@ exports.updateResult = async (matchId, team1Goal, team2Goal) => {
     else if ( goal1 < goal2){
         winTeam = match.MaDB2;
     }
-    else{
-        const index = Math.floor(Math.random() * 2);
-        if(index === 0){
-            winTeam = match.MaDB1;
-        }else{
-            winTeam = match.MaDB2;
-        }
 
-    }
+
+    // else{
+    //     const index = Math.floor(Math.random() * 2);
+    //     if(index === 0){
+    //         winTeam = match.MaDB1;
+    //     }else{
+    //         winTeam = match.MaDB2;
+    //     }
+    //
+    // }
+
 
     await match.update({
         SoBanThangDB1: goal1,
