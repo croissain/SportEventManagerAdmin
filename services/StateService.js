@@ -1,6 +1,7 @@
 const {models} = require('../models');
 const Sequelize = require('sequelize');
 const {where} = require("sequelize");
+const PlayerService = require("../services/PlayerService");
 const Op = Sequelize.Op;
 
 exports.findAllStateByTournamentId = async (tournamentId, raw = false) => {
@@ -112,8 +113,19 @@ exports.isEndOfState = async (tournamentId, stateID) => {
         console.log(e);
         return false;
     }
+}
 
+exports.deleteAllStateByTournamentId = async(tournamentId) => {    try{
 
+        // const stateIds = await this.findAllTeamIdsByTournamentId(tournamentId);
 
-
+        const deleteStates = await models.VongDau.destroy({
+            where: {
+                MaGD: tournamentId
+            }
+        });
+        return true;
+    }catch (e){
+        return false;
+}
 }

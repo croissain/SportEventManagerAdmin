@@ -64,6 +64,15 @@ exports.findTournamentById = async(id, raw = false) => {
     });
 }
 
+exports.findTournamentByIds = async(ids, raw = false) => {
+    return await models.GiaiDau.findOne({
+        raw: raw,
+        where: {
+            MaGD: ids
+        }
+    });
+}
+
 exports.findTournamentByName = async(name) => {
     return await models.GiaiDau.findOne({
         raw: true,
@@ -122,6 +131,7 @@ exports.editTournament = async (tournamentId, tournamentName, tournamentMinAge, 
     tournamentMinAge = tournamentMinAge ||  tournament.DoTuoiTGNhoNhat;
     tournamentMaxAge = tournamentMaxAge ||  tournament.DoTuoiTGLonNhat;
     tournamentNumberTeam = tournamentNumberTeam ||  tournament.SoDBThamGia;
+    tournamentDeadline = tournamentDeadline || tournament.HanCuoiDangKy;
 
     try {
 
@@ -141,24 +151,47 @@ exports.editTournament = async (tournamentId, tournamentName, tournamentMinAge, 
     }
 }
 
-exports.deleteTournamentByIds = async(ids) => {
-    const teamIds = await TeamService.findAllTeamIdsByTournamentId(ids);
+exports.deleteTournamentByIds = async(tournamentIds) => {
+    try{
 
-    await MatchService.deleteAllMatchByTeamIds(teamIds);
-    await TeamService.deleteAllTeamByTournamentId(ids);
+        await MatchService.deleteAllMatchByTournamentIds(tournamentIds);
+        await TeamService.deleteAllTeamByTournamentId(tournamentIds);
+        await StateService.deleteAllStateByTournamentId(tournamentIds);
+        const tournament = await this.findTournamentByIds(tournamentIds);
+        tournament.destroy({
+            where: {
+                MaGD: tournamentIds
+            }
+        })
+        return true;
+    }catch (e) {
+        console.log(e);
+        return false;
+    }
 
-    const tournament = await this.findTournamentById(ids);
-    tournament.destroy({
-        where: {
-            MaGD: ids
-        }
-    })
+
+    // await MatchService.deleteAllMatchByTeamIds(teamIds);
+
+    // const tournament = await this.findTournamentById(ids);
+    // tournament.destroy({
+    //     where: {
+    //         MaGD: ids
+    //     }
+    // })
 }
 
 
 exports.scheduleByTournamentId = async (tournamentId) => {
 
     try{
+
+        //Kiểm tra xem giải đấu có độ tham gia hay chưa
+        const allTournamenTeams = await MatchService.findAndCountAllTeamsByTournamentId(tournamentId, true);
+
+        if (allTournamenTeams.count === 0) {
+            return {success: false};
+        }
+
         const lastestState = await StateService.findLatestStateByTournamentId(tournamentId, true);
         //
         let matchs = new Array();

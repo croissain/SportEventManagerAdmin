@@ -3,6 +3,7 @@ const Sequelize = require('sequelize');
 const GoalService = require('../services/GoalService');
 const MatchDetailService = require('../services/MatchDetail');
 const TeamService = require('../services/TeamService');
+const PlayerService = require("../services/PlayerService");
 
 const Op = Sequelize.Op;
 
@@ -142,6 +143,21 @@ exports.findAndCountAllWinTeamsByTournamentIdAndStateId = async (tournamentId, s
     }
 }
 
+exports.findAndCountAllTeamsByTournamentId = async (tournamentId, raw = false) => {
+    const allTeams = await models.DoiBong.findAndCountAll({
+        where: {
+            MaGD: tournamentId,
+        },
+        raw: true,
+    });
+    return allTeams;
+
+
+
+}
+
+
+
 exports.findLastestMatchTimeByTournamentId = async (tournamentId) => {
     const maxDate = await models.TranDau.findOne({
         where: {
@@ -168,13 +184,14 @@ exports.updateWinTeamByMatchId = async (matchId, teamId) => {
     return match;
 }
 
-exports.updateResult = async (matchId, team1Goal, team2Goal, winTeam) => {
+exports.updateResult = async (matchId, team1Goal, team2Goal, winTeamCode) => {
     const match = await this.findMatchById(matchId);
 
 
 
     const goal1 = parseInt(team1Goal);
     const goal2 = parseInt(team2Goal);
+    let winTeam;
 
     if ( goal1 > goal2){
         winTeam = match.MaDB1;
@@ -182,17 +199,22 @@ exports.updateResult = async (matchId, team1Goal, team2Goal, winTeam) => {
     else if ( goal1 < goal2){
         winTeam = match.MaDB2;
     }
+    else{
 
+        if(parseInt(winTeamCode) === 1){
+            winTeam = match.MaDB1;
+        }else if (parseInt(winTeamCode) ===2 ){
+            winTeam = match.MaDB2;
+        }
 
-    // else{
-    //     const index = Math.floor(Math.random() * 2);
-    //     if(index === 0){
-    //         winTeam = match.MaDB1;
-    //     }else{
-    //         winTeam = match.MaDB2;
-    //     }
-    //
-    // }
+        // const index = Math.floor(Math.random() * 2);
+        // if(index === 0){
+        //     winTeam = match.MaDB1;
+        // }else{
+        //     winTeam = match.MaDB2;
+        // }
+
+    }
 
 
     await match.update({
@@ -225,4 +247,45 @@ exports.randomWinTeam = async (tournamentId, stateId) => {
     }
 
 
+}
+
+exports.findAllMatchIdsByTournamentId = async(tournamentIds) => {
+
+}
+
+
+exports.findAllMatchIdsByTournamentId = async (tournamentId, raw = false) => {
+    const matchIds = await models.TranDau.findAll({
+        where: ({MaGD: tournamentId}),
+        attributes: ['MaTD'],
+    });
+
+    return matchIds.map(function (current) {
+        return current.MaTD;
+    });
+}
+
+
+exports.deleteAllMatchByTournamentIds = async(tournamentIds) => {
+    try{
+
+        // const teamIds = await this.findAllTeamIdsByTournamentId(tournamentId);
+        // await PlayerService.deletePlayerByTeamIds(teamIds);
+
+
+        const matchIds = await this.findAllMatchIdsByTournamentId(tournamentIds);
+
+        const deleteMatchDetails = await MatchDetailService.deleteAllMatchDetailByMatchIds(matchIds);
+
+        const deleteGoals = await GoalService.deleteAllGoalByMatchIds(matchIds);
+
+        const deleteMatchs = await models.TranDau.destroy({
+            where: {
+                MaGD: tournamentIds
+            }
+        });
+        return true;
+    }catch (e){
+        return false;
+    }
 }
