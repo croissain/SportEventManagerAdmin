@@ -122,6 +122,7 @@ exports.editTournament = async (tournamentId, tournamentName, tournamentMinAge, 
     tournamentMinAge = tournamentMinAge ||  tournament.DoTuoiTGNhoNhat;
     tournamentMaxAge = tournamentMaxAge ||  tournament.DoTuoiTGLonNhat;
     tournamentNumberTeam = tournamentNumberTeam ||  tournament.SoDBThamGia;
+    tournamentDeadline = tournamentDeadline || tournament.HanCuoiDangKy;
 
     try {
 

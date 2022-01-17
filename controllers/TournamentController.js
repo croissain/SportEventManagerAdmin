@@ -97,7 +97,7 @@ class TournamentController {
     deleteTournament = async(req, res, next) => {
         const id = req.query.deleteID;
         console.log("delete id: ", id);
-        const deleteTournament = await TournamentService.deleteTournamentById(id);
+        const deleteTournament = await TournamentService.deleteTournamentByIds(id);
         res.redirect('/tournament');
     }
 
