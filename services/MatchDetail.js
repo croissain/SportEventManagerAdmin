@@ -15,3 +15,16 @@ exports.deleteMatchDetailByMatchIds = async(matchIds) => {
         return false;
     }
 }
+
+exports.deleteAllMatchDetailByMatchIds = async(matchIds) => {
+    try{
+        const deleteMatchDetails = await models.ChiTietTD.destroy({
+            where: {
+                MaTD: matchIds
+            }
+        });
+        return true;
+    }catch (e) {
+        return false;
+    }
+}

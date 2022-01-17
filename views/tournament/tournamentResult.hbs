@@ -44,11 +44,11 @@
                         <td>
                             {{#unless DoiThang}}
                                 <a href="#editModal" class="edit" data-toggle="modal">
-                                    <input type="hidden" value="{{MaTD}}">
+                                    <input type="hidden" class="tournamentId" value="{{MaTD}}">
                                     <i class="fas fa-pencil-alt"></i>
+                                    <input type="hidden" class="team1Id" value="{{MaDB1}}">
+                                    <input type="hidden" class="team2Id" value="{{MaDB2}}">
                                 </a>
-                                <input type="hidden" id="team1Id" value="{{MaDB1}}">
-                                <input type="hidden" id="team2Id" value="{{MaDB2}}">
                             {{/unless}}
                         </td>
 
@@ -79,12 +79,12 @@
                     <p>Chọn đội chiến thắng</p>
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" id="team1Select" name="winTeam">Đội thứ 1
+                            <input type="radio" class="form-check-input" id="team1Select" name="winTeam" value="1">Đội thứ 1
                         </label>
                     </div>
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" id="team2Select" name="winTeam">Đội thứ 2
+                            <input type="radio" class="form-check-input" id="team2Select" name="winTeam" value="2">Đội thứ 2
                         </label>
                     </div>
                 </div>
@@ -100,14 +100,22 @@
 
 
 {{#section 'script'}}
-    <script src="/javascripts/filterEditDelete.js"></script>
+<!--    <script src="/javascripts/filterEditDelete.js"></script>-->
+    <script>
+        $(".edit").click(function() {
+            const id = $(this).children('.tournamentId').val();
+            console.log(id);
+            $("#editID").val(id);
+
+            console.log('tournamentId:', id);
+
+
+        });
+
+    </script>
     <script>
 
-        const team1Id = $("#team1Id").val();
-        const team2Id = $("#team2Id").val();
 
-        $("#team1select").val(team1Id);
-        $("#team2Select").val(team2Id);
 
         $(document).ready(function(){
             $("#selectWinTeam").hide();
@@ -123,6 +131,17 @@
             if(team1Goal === team2Goal){
 
                 $("#selectWinTeam").show();
+                const team1Id = $('.edit .team1Id').val();
+                const team2Id = $('.edit .team2Id').val();
+
+                // $("#team1select").val(team1Id);
+                // $("#team2Select").val(team2Id);
+                //
+                // console.log('team1Id:', team1Id);
+                // console.log('team2Id:', team2Id);
+                //
+                // console.log('team1select:', $("#team1select").val());
+                // console.log('team2Select:', $("#team2select").val());
             }else{
                 $("#selectWinTeam").hide();
             }

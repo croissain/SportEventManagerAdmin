@@ -15,3 +15,17 @@ exports.deleteGoalByMatchIds = async(matchIds) => {
         return false;
     }
 }
+
+
+exports.deleteAllGoalByMatchIds = async(matchIds) => {
+    try{
+        const deleteGoals = await models.BanThang.destroy({
+            where: {
+                MaTD: matchIds
+            }
+        });
+        return true;
+    }catch (e) {
+        return false;
+    }
+}

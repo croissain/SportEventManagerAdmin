@@ -73,8 +73,8 @@
                     <div class="col-lg-4 pb-2 text-center">
                         <a href="#addModal" class="btn btn-success btn-add" data-toggle="modal"><i
                                 class="fas fa-plus-circle"></i> <span>Thêm giải đấu</span></a>
-                        <a href="#deleteAllModal" class="btn btn-danger btn-delete" data-toggle="modal"><i
-                                class="fas fa-minus-circle"></i><span>Xóa tất cả</span></a>
+<!--                        <a href="#deleteAllModal" class="btn btn-danger btn-delete" data-toggle="modal"><i-->
+<!--                                class="fas fa-minus-circle"></i><span>Xóa tất cả</span></a>-->
                     </div>
                 </div>
             </form>
@@ -83,12 +83,12 @@
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th>
-                            <span class="custom-checkbox">
-                                <input type="checkbox" id="selectAll">
-                                <label for="selectAll"></label>
-                            </span>
-                        </th>
+<!--                        <th>-->
+<!--                            <span class="custom-checkbox">-->
+<!--                                <input type="checkbox" id="selectAll">-->
+<!--                                <label for="selectAll"></label>-->
+<!--                            </span>-->
+<!--                        </th>-->
                         <th>Mã giải đấu</th>
                         <th>Tên giải đấu</th>
                         <th>Độ tuổi lớn nhất</th>
@@ -103,12 +103,12 @@
                     <tbody>
                     {{#each tournaments}}
                         <tr>
-                            <td>
-                                <span class="custom-checkbox">
-                                    <input class="select-row-checkbox" type="checkbox" id="checkbox1" name="idOptions[]" value="{{MaGD}}">
-                                    <label for="checkbox1"></label>
-                                </span>
-                            </td>
+<!--                            <td>-->
+<!--                                <span class="custom-checkbox">-->
+<!--                                    <input class="select-row-checkbox" type="checkbox" id="checkbox1" name="idOptions[]" value="{{MaGD}}">-->
+<!--                                    <label for="checkbox1"></label>-->
+<!--                                </span>-->
+<!--                            </td>-->
                             <td>{{MaGD}}</td>
                             <td>{{TenGD}}</td>
                             <td>{{DoTuoiTGLonNhat}}</td>
@@ -251,26 +251,26 @@
     </div>
 </div>
 
-<div id="deleteAllModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div>
-                <div class="modal-header">
-                    <h4 class="modal-title">Xóa tất cả thành viên?</h4>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Bạn chắc chắn xóa tất cả thành viên khỏi đội?</p>
-                    <p class="text-warning"><small>Hành động này sẽ không được phục hồi!</small></p>
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
-                    <button type="submit" class="btn btn-danger" form="selectedForm">Xóa</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<!--<div id="deleteAllModal" class="modal fade">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            <div>-->
+<!--                <div class="modal-header">-->
+<!--                    <h4 class="modal-title">Xóa tất cả thành viên?</h4>-->
+<!--                    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true"></button>-->
+<!--                </div>-->
+<!--                <div class="modal-body">-->
+<!--                    <p>Bạn chắc chắn xóa tất cả thành viên khỏi đội?</p>-->
+<!--                    <p class="text-warning"><small>Hành động này sẽ không được phục hồi!</small></p>-->
+<!--                </div>-->
+<!--                <div class="modal-footer">-->
+<!--                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">-->
+<!--                    <button type="submit" class="btn btn-danger" form="selectedForm">Xóa</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 {{#section 'script'}}
     <script>
