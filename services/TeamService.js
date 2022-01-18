@@ -104,6 +104,7 @@ exports.findAllTeamsAndCount = async(filter, page, limit) => {
         options.include[0].where.TenGD = filter.tournamentName;
     }
 
+    console.log(options.where);
 
     try{
         const teams = await models.DoiBong.findAndCountAll(options);
@@ -150,6 +151,40 @@ exports.deleteAllTeamByTournamentId = async(tournamentId) => {
         });
         return true;
     }catch (e){
+        return false;
+    }
+}
+
+exports.findAndCountAllMembers = async (filter) => {
+    let options = {
+        
+        order: [
+            ['MaCT', 'ASC'],
+        ],
+        where: {
+        },
+        raw: true
+    }
+
+    if(filter.teamid){
+        options.where.MaDB = filter.teamid;
+    }
+
+    if(filter.playerId){
+        options.where.MaCT = filter.playerId
+    }
+
+    if(filter.playerName){
+        options.where.TenCT = { [Op.iLike]: `%${filter.playerName}%` };
+    }
+
+    console.log(options.where);
+
+    try{
+        const members = await models.CauThu.findAndCountAll(options);
+        return members;
+    }catch (e){
+        console.log(e)
         return false;
     }
 }

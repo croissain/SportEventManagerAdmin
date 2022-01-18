@@ -37,6 +37,27 @@ class TeamController {
         });
     }
 
+    showTeamMembers = async(req, res, next) => {
+        const {teamid} = req.params;
+        const data = req.query;
+
+        const filter = {
+            teamid,
+            playerId: data.playerId,
+            playerName: (data.playerName !== "0") ? data.playerName : undefined
+        }
+
+        const team = await TeamService.findTeamById(teamid);
+        const members = await TeamService.findAndCountAllMembers(filter);
+        console.log(members);
+        res.render('team/teamMembers', {
+            title: 'team members',
+            team,
+            members: members.rows,
+            filter
+        });
+    }
+
     deleteTeam = async(req, res, next) => {
         const id = req.query.deleteID;
         console.log("delete id: ", id);
